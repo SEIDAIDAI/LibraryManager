@@ -1,4 +1,4 @@
-package com.ibm6.bean;
+package com.ibm6.model;
 
 public class Password {
 	private String password;
