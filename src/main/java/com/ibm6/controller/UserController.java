@@ -18,7 +18,7 @@ import com.ibm6.mapper.UserMapper;
 
 
 @RestController
-@RequestMapping("dd")
+@RequestMapping()
 public class UserController {
 	
 	@Autowired
@@ -84,6 +84,11 @@ public class UserController {
 		user.setUser_id(5);
 		user.setName("huang");
 		userMapper.updateById(user);
+		return "update";
+	}
+	@RequestMapping("/findAllRole")
+	public String findAllRole() {
+		
 		return "update";
 	}
 }
