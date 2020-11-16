@@ -52,6 +52,9 @@ public class Book {
 	public Date getStoreDate() {
 		return storeDate;
 	}
+	public void setStoreDate(Date storeDate) {
+		this.storeDate = storeDate;
+	}
 	public int getLeftAmount() {
 		return leftAmount;
 	}
