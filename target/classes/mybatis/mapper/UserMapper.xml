@@ -4,7 +4,7 @@
 <!-- mapper标签要指定namespace属性，不然会报错，可看做包名 -->
 
 <mapper namespace="com.ibm6.mapper.UserMapper">
-	<resultMap type="com.ibm6.bean.User" id="queryResultMap">
+	<resultMap type="com.ibm6.bean.User" id="userResultMap">
 		<result property="userId" column="user_id" />
 	</resultMap>
 	<!-- <select id="queryBySchoolTitle" parameterType="Linda.mybatis.Education" 
@@ -61,6 +61,8 @@
 		where user_id = #{user_id}
 	</update>
 
+
+	
 
 	<!-- <delete id="deleteById" parameterType="Linda.mybatis.Education"> delete 
 		from education where reterence =#{reterence}; </delete> <update id="update" 
