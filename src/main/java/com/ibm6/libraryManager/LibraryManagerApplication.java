@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
 @ComponentScan("com.ibm6.*")
+@MapperScan("com.ibm6.mapper")
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class LibraryManagerApplication {
 
