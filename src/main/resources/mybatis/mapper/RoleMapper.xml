@@ -15,6 +15,10 @@
 	
 	<select id="findByAccount" resultMap="roleResultMap" parameterType="java.lang.String">
 		select * from role where user_account = #{account}
-	
 	</select>
+	
+	<insert id="insert" parameterType="com.ibm6.bean.Role">
+		insert into role 
+	</insert>
+	
 </mapper>
