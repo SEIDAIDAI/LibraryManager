@@ -28,7 +28,7 @@
 		select * from user
 	</select>
 	
-	<select id="findById" resultType="com.ibm6.bean.User">
+<!-- 	<select id="findById" resultType="com.ibm6.bean.User">
 		select * from user where user_id = #{id}
 	</select>
 	
@@ -59,7 +59,7 @@
 			description=#{description}
 		</if>
 		where user_id = #{user_id}
-	</update>
+	</update> -->
 
 
 	<!-- <delete id="deleteById" parameterType="Linda.mybatis.Education"> delete 

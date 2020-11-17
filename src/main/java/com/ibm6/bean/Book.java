@@ -73,5 +73,11 @@ public class Book {
 	public void setDownloadAmount(int downloadAmount) {
 		this.downloadAmount = downloadAmount;
 	}
+	@Override
+	public String toString() {
+		return "Book [bookId=" + bookId + ", bookName=" + bookName + ", nation=" + nation + ", type=" + type
+				+ ", length=" + length + ", theme=" + theme + ", storeDate=" + storeDate + ", leftAmount=" + leftAmount
+				+ ", uploadAmount=" + uploadAmount + ", downloadAmount=" + downloadAmount + "]";
+	}
 	
 }

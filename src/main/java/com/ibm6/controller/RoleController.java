@@ -50,7 +50,7 @@ public class RoleController {
 	@RequestMapping("/regist")
 	@ResponseBody
 	public String regist(String account,String name,String password,String email) {
-		int userId = service.findMaxUserId();
+		int userId=service.findMaxUserId();
 		userId++;
 		Role role=new Role();
 		role.setUserAccount(account);
@@ -69,7 +69,7 @@ public class RoleController {
 			// TODO: handle exception
 			return "-1";
 		}
-//		service.regist(role, user); 
+//		service.regist(role, user);
 		return "1";
 	}
 	
