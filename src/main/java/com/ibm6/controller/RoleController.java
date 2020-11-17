@@ -1,5 +1,6 @@
 package com.ibm6.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,7 @@ public class RoleController {
 		user.setName(name);
 		user.setEmail(email);
 		user.setUserId(userId);
+		user.setBirthday(new Date());
 		try {
 			int re = service.regist(role,user);
 			if(re==-1) {
