@@ -18,7 +18,11 @@
 	</select>
 	
 	<insert id="insert" parameterType="com.ibm6.bean.Role">
-		insert into role 
+		insert into role(user_id,user_account,user_password) values(#{userId},#{userAccount},#{userPassword})
 	</insert>
+	
+	<select id="findMaxUserId" resultType="java.lang.String">
+		select max(user_id) from role
+	</select>
 	
 </mapper>

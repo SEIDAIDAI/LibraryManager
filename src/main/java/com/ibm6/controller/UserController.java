@@ -27,14 +27,14 @@ public class UserController {
 	@Autowired
 	private UserMapper userMapper;
 	
-	@PostMapping("/save/user")
-	public User CreateUser(@RequestBody User user)
-	{
-		System.out.println("Come in");
-		userMapper.saveNewUser(user);
-		System.out.println("用户插入成功");
-		return user;
-	}
+//	@PostMapping("/save/user")
+//	public User CreateUser(@RequestBody User user)
+//	{
+//		System.out.println("Come in");
+//		userMapper.saveNewUser(user);
+//		System.out.println("用户插入成功");
+//		return user;
+//	}
 
 	@RequestMapping("tt")
 	public String Say()
@@ -84,7 +84,7 @@ public class UserController {
 	@RequestMapping("/updateById")
 	public String updateById() {
 		User user=new User();
-		user.setUserId(5);
+//		user.setUserId(5);
 		user.setName("huang");
 		userMapper.updateById(user);
 		return "update";
