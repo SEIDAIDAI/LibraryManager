@@ -43,10 +43,31 @@
 		select * from Book
 		<where>
 			<if test="bookName != null">
-				book_name=#{bookName}
+				book_name=#{bookName} or author=#{bookName}
 			</if>
 		</where>
 	</select>
+
+	<select id="findByPage" resultType="com.ibm6.bean.Book">
+		select * from Book limit
+		#{index}, 2
+	</select>
+
+	<update id="updateById">
+		update book
+		set book_name = #{bookName},
+		nation = #{nation},
+		type = #{type},
+		length = #{length},
+		theme = #{theme},
+		store_date = #{storeDate},
+		left_amount = #{leftAmount},
+		upload_amount = #{uploadAmount},
+		download_amount = #{downloadAmount}
+		where book_id = #{bookId}
+	</update>
+	
+
 
 </mapper>
 

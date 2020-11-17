@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ibm6.bean.Book;
+import com.ibm6.bean.User;
 import com.ibm6.mapper.BookMapper;
+import com.ibm6.mapper.UserMapper;
 import com.ibm6.model.BookSearchType;
 
 @Service
@@ -34,5 +36,23 @@ public class BookService {
 		return bookList;
 	}
 	
+	public List<Book> bookSearchByPage(Integer index)
+	{
+		List<Book> bookList = bookMapper.findByPage(index);
+
+		return bookList;
+	}
+	
+	public int bookInfoUpdate(Book book)
+	{
+		int re = bookMapper.updateById(book);
+
+		return re;
+	}
+	
 	
 }
+
+
+
+
