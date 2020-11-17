@@ -1,5 +1,7 @@
 package com.ibm6.mapper;
 
-public interface BookMapper {
+import com.ibm6.bean.Book;
 
+public interface BookMapper {
+	public int findByCondition(Book book);
 }
