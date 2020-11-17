@@ -50,8 +50,8 @@ public class RoleController {
 	@RequestMapping("/regist")
 	@ResponseBody
 	public String regist(String account,String name,String password,String email) {
-		String userId = service.findMaxUserId();
-		userId=Integer.toString(Integer.parseInt(userId)+1);
+		int userId = service.findMaxUserId();
+		userId++;
 		Role role=new Role();
 		role.setUserAccount(account);
 		role.setUserPassword(password);

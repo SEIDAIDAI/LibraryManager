@@ -3,7 +3,7 @@ package com.ibm6.bean;
 public class Role {
 	
 	private int id;
-	private String userId;
+	private int userId;
 	private String userAccount;
 	private String userPassword;
 	private int  active;
@@ -14,10 +14,11 @@ public class Role {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getUserId() {
+	
+	public int getUserId() {
 		return userId;
 	}
-	public void setUserId(String userId) {
+	public void setUserId(int userId) {
 		this.userId = userId;
 	}
 	public String getUserAccount() {

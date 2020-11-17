@@ -14,6 +14,6 @@ public interface RoleMapper {
 	public Role findByAccount(String account);
 	public int insert(Role role);
 	public int insertUser(User user);
-	public String findMaxUserId();
+	public int findMaxUserId();
 	
 }

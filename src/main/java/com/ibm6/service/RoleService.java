@@ -40,7 +40,7 @@ public class RoleService {
 		return 1;
 	}
 	
-	public String findMaxUserId() {
+	public int findMaxUserId() {
 		return roleMapper.findMaxUserId();
 	}
 }

@@ -82,10 +82,7 @@ public class UserController {
 	}
 	
 	@RequestMapping("/updateById")
-	public String updateById() {
-		User user=new User();
-//		user.setUserId(5);
-		user.setName("huang");
+	public String updateById(User user) {
 		userMapper.updateById(user);
 		return "update";
 	}
