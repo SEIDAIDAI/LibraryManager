@@ -14,4 +14,5 @@ public interface UserMapper {
 	public List<User> findAll ();
 	public User findById(int id);
 	public int updateById(User user);
+	public int updateByIdSelective(User user);
 }

@@ -14,54 +14,68 @@
 		<select id="queryAll" resultType="Linda.mybatis.Education" resultMap="queryResultMap"> 
 		select * from education </select> -->
 	<insert id="insert" parameterType="com.ibm6.bean.User">
-		insert into user(user_id, name, gender, age, email, birthday, phone,
+		insert into user(user_id,
+		name, gender, age, email, birthday, phone,
 		address, description)
-		values(#{userId}, #{name}, #{gender}, #{age}, #{email}, #{birthday}, #{phone},
+		values(#{userId}, #{name}, #{gender}, #{age}, #{email}, #{birthday},
+		#{phone},
 		#{address}, #{description});
 	</insert>
-	
+
 	<delete id="deleteById" parameterType="int">
-		delete from user where user_id = #{id}
+		delete from user where
+		user_id = #{id}
 	</delete>
 
 	<select id="findAll" resultType="com.ibm6.bean.User">
 		select * from user
 	</select>
-	
-<!-- 	<select id="findById" resultType="com.ibm6.bean.User">
-		select * from user where user_id = #{id}
+
+	<select id="findById" resultType="com.ibm6.bean.User">
+		select * from user where
+		user_id = #{id}
 	</select>
-	
+
+	<update id="updateByIdSelective"
+		parameterType="com.ibm6.bean.User">
+		update user
+		<set>
+			<if test="name!=null">
+				name=#{name},
+			</if>
+			<if test="gender!=null">
+				gender=#{gender},
+			</if>
+			<if test="age!=null">
+				age = #{age},
+			</if>
+			<if test="email!=null">
+				email = #{email},
+			</if>
+			<if test="birthday!=null">
+				birthday=#{birthday},
+			</if>
+			<if test="phone!=null">
+				phone=#{phone},
+			</if>
+			<if test="address!=null">
+				address=#{address},
+			</if>
+			<if test="description!=null">
+				description=#{description},
+			</if>
+		</set>
+		where user_id = #{userId}
+	</update>
+
 	<update id="updateById" parameterType="com.ibm6.bean.User">
-		update user set 
-		<if test="name!=null">
-			name=#{name}
-		</if>
-		<if test="gender!=null">
-			gender=#{gender}
-		</if>
-		<if test="age!=null">
-			age = #{age}
-		</if>
-		<if test="email!=null">
-			email = #{email}
-		</if>
-		<if test="birthday!=null">
-			birthday=#{birthday}
-		</if>
-		<if test="phone!=null">
-			phone=#{phone}
-		</if>
-		<if test="address!=null">
-			address=#{address}
-		</if>
-		<if test="description!=null">
-			description=#{description}
-		</if>
-		where user_id = #{user_id}
-	</update> -->
+		update user set
+		name=#{name},gender=#{gender},age = #{age},email =
+		#{email},birthday=#{birthday},
+		phone=#{phone},address=#{address},description=#{description} where
+		user_id = #{userId}
 
-
+	</update>
 	<!-- <delete id="deleteById" parameterType="Linda.mybatis.Education"> delete 
 		from education where reterence =#{reterence}; </delete> <update id="update" 
 		parameterType="Linda.mybatis.Education"> update education set schoolName=? 

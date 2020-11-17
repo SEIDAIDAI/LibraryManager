@@ -75,7 +75,6 @@ public class RoleController {
 	
 	
 	@RequestMapping("/findAllRole")
-	@ResponseBody
 	public String findAllRole() {
 		List<Role> roles = service.findAllRole();
 		for(Role role:roles) {
