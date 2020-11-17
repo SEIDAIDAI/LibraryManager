@@ -1,13 +1,13 @@
 package com.ibm6.bean;
 
 public class Role {
+	
 	private int id;
 	private String userId;
 	private String userAccount;
 	private String userPassword;
 	private int  active;
 	private int admin;
-	
 	public int getId() {
 		return id;
 	}
