@@ -3,7 +3,7 @@ package com.ibm6.bean;
 import java.util.Date;
 
 public class User {
-	private int userId;
+	private String userId;
 	private String name;
 	private String gender;
 	private String age; 
@@ -13,10 +13,11 @@ public class User {
 	private String address;
 	private String description ;
 	
-	public int getUserId() {
+	
+	public String getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 	public String getName() {
