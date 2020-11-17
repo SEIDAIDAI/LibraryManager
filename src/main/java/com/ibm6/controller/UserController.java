@@ -17,77 +17,32 @@ import com.ibm6.bean.Role;
 import com.ibm6.bean.User;
 import com.ibm6.mapper.UserMapper;
 import com.ibm6.service.RoleService;
+import com.ibm6.service.UserService;
 
 
 
-@Controller
+@RestController
 @RequestMapping()
 public class UserController {
 	
 	@Autowired
 	private UserMapper userMapper;
 	
-//	@PostMapping("/save/user")
-//	public User CreateUser(@RequestBody User user)
-//	{
-//		System.out.println("Come in");
-//		userMapper.saveNewUser(user);
-//		System.out.println("用户插入成功");
-//		return user;
-//	}
+	@Autowired
+	private UserService userService;
 
-	@RequestMapping("tt")
-	public String Say()
-	{
-		System.out.println("Hello");
-		System.out.println("Hello");
-		System.out.println("Hello");
-		System.out.println("Hello");
-		System.out.println("Hello");
-		return "Hello";
-	}
-	
-	@GetMapping("/query/{id}")
-    public String getDepartment(@PathVariable("id") Integer id){
-		
-		System.out.println("Hello");
-		System.out.println("Hello");
-		System.out.println("Hello");
-		System.out.println("Hello");
-		System.out.println("Hello");
-		return "linda";
-    }
-	
-	@RequestMapping("/delete")
-	public String deleteByid() {
-		System.out.println("123");
-		int re = userMapper.deleteById(1);
-		return "delete";
-	}
-	
-	@RequestMapping("/findAll")
-	public String findAll() {
-		List<User> users = userMapper.findAll();
-		for(User user : users) {
-			System.out.println(user);
-		}
-		return "findAll";
-	}
-	
-	@RequestMapping("/findById")
-	public String findById() {
-		User user = userMapper.findById(5);
-		System.out.println(user);
-		return "findById";
+	@RequestMapping("/showUser")
+	public User showUser(String userId) {
+		User user = userMapper.findById(Integer.parseInt(userId));
+//		System.out.println(user);
+		return user;
 	}
 	
 	@RequestMapping("/updateById")
-	public String updateById() {
-		User user=new User();
-//		user.setUserId(5);
-		user.setName("huang");
-		userMapper.updateById(user);
-		return "update";
+	public int updateById(User user) {
+		
+		System.out.println(user);
+		return userService.updateById(user);
 	}
 	
 }

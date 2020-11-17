@@ -7,13 +7,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSON;
 import com.ibm6.bean.Role;
 import com.ibm6.bean.User;
 import com.ibm6.mapper.UserMapper;
+import com.ibm6.model.LoginResult;
 import com.ibm6.service.RoleService;
 
-@Controller
+
+
+@RestController
 public class RoleController {
 	@Autowired
 	private RoleService service;
@@ -22,36 +27,31 @@ public class RoleController {
 	private UserMapper mapper;
 	
 	@RequestMapping("/login")
-	@ResponseBody
-	public String login(String account,String password) {
-//		account="10086";
-//		password="123456";
-//		System.out.println(account+password);
-		Role role = service.login(account);
-		System.out.println(role);
-		if(role!=null) {
-			if(password.equals(role.getUserPassword())) {
-				if(role.getActive()==1) {
-					return "1";
-				}else {
-					return "2";
+	public LoginResult login(String account,String password) {
+		Role role = service.login(account);//查询密码出来
+		LoginResult result=new LoginResult();
+		result.setResultCode(-1);
+		if(role!=null) {    //不为空证明有这个账号
+			if(password.equals(role.getUserPassword())) { //对比密码	
+				result.setResultCode(1);
+				result.setUserId(role.getUserId());
+				if (role.getAdmin()==1) {
+					result.setAdmin(1);
 				}
+				return result;
 			}
 			else {
-				return "0";
+				return result; //密码错误返回-1
 			}
 		}else {
-			return "-1";
+			return result; //账号错误返回-1
 		}
-//		System.out.println(role);
-//		return "111";
 	}
 	
 	@RequestMapping("/regist")
-	@ResponseBody
 	public String regist(String account,String name,String password,String email) {
-		String userId = service.findMaxUserId();
-		userId=Integer.toString(Integer.parseInt(userId)+1);
+		int userId=service.findMaxUserId();
+		userId++;
 		Role role=new Role();
 		role.setUserAccount(account);
 		role.setUserPassword(password);
@@ -66,16 +66,15 @@ public class RoleController {
 				return "0";
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 			return "-1";
 		}
-//		service.regist(role, user); 
 		return "1";
 	}
 	
 	
+	
+	
 	@RequestMapping("/findAllRole")
-	@ResponseBody
 	public String findAllRole() {
 		List<Role> roles = service.findAllRole();
 		for(Role role:roles) {

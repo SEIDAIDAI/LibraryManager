@@ -21,7 +21,7 @@
 		insert into role(user_id,user_account,user_password) values(#{userId},#{userAccount},#{userPassword})
 	</insert>
 	
-	<select id="findMaxUserId" resultType="java.lang.String">
+	<select id="findMaxUserId" resultType="java.lang.Integer">
 		select max(user_id) from role
 	</select>
 	

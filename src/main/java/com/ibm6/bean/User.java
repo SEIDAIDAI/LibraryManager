@@ -3,7 +3,7 @@ package com.ibm6.bean;
 import java.util.Date;
 
 public class User {
-	private String userId;
+	private int userId;
 	private String name;
 	private String gender;
 	private String age; 
@@ -14,10 +14,11 @@ public class User {
 	private String description ;
 	
 	
-	public String getUserId() {
+	
+	public int getUserId() {
 		return userId;
 	}
-	public void setUserId(String userId) {
+	public void setUserId(int userId) {
 		this.userId = userId;
 	}
 	public String getName() {
@@ -70,7 +71,7 @@ public class User {
 	}
 	@Override
 	public String toString() {
-		return "User [user_id=" + userId + ", name=" + name + ", gender=" + gender + ", age=" + age + ", email="
+		return "User [userId=" + userId + ", name=" + name + ", gender=" + gender + ", age=" + age + ", email="
 				+ email + ", birthday=" + birthday + ", phone=" + phone + ", address=" + address + ", description="
 				+ description + "]";
 	}
