@@ -60,10 +60,5 @@ public class BookController {
 		int re = bookService.bookInfoUpdate(book);
 		return re;
 	}
-	
-	
-	
-	
 
-	
 }
