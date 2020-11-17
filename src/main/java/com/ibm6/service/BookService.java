@@ -29,8 +29,6 @@ public class BookService {
 	
 	public List<Book> bookSearchByKeyword(Book book)
 	{
-		System.out.println(book.getBookName());
-		System.out.println("/////////////");
 		List<Book> bookList = bookMapper.findByKeyword(book);
 
 		return bookList;
