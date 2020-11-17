@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ibm6.bean.Role;
 import com.ibm6.bean.User;
 import com.ibm6.mapper.UserMapper;
-import com.ibm6.service.roleService;
+import com.ibm6.service.RoleService;
 
 
 
