@@ -61,13 +61,9 @@ public class BookController {
 		return re;
 	}
 	
-	/*
-	 * @GetMapping("/UserSearch/{index}") public List<User>
-	 * UserSearch(@PathVariable("index") Integer index) { List<User> re =
-	 * bookService.UserSearch(index); return re; }
-	 */
 	
 	
 	
+
 	
 }

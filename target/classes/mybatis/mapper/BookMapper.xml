@@ -67,9 +67,7 @@
 		where book_id = #{bookId}
 	</update>
 	
-<!-- 	<select id="selectById" resultType="com.ibm6.bean.User">
-		select * from User where id = #{index}
-	</select> -->
+
 
 </mapper>
 

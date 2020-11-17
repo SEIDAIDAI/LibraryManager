@@ -17,7 +17,6 @@ import com.ibm6.model.BookSearchType;
 public class BookService {
 	@Autowired
 	private BookMapper bookMapper;
-	private UserMapper userMapper;
 		
 	public List<Book> bookSearchByType(Book book) {
 		List<Book> bookList = bookMapper.findByCondition(book);
@@ -51,10 +50,7 @@ public class BookService {
 		return re;
 	}
 	
-	/*
-	 * public List<User> UserSearch(int index) { List<User> re =
-	 * userMapper.selectById(index); }
-	 */
+	
 }
 
 
