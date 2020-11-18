@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +20,7 @@ import com.ibm6.bean.Role;
 import com.ibm6.bean.User;
 import com.ibm6.mapper.UserMapper;
 import com.ibm6.model.LoginResult;
+import com.ibm6.model.Register;
 import com.ibm6.service.RoleService;
 
 
@@ -52,8 +55,13 @@ public class RoleController {
 		}
 	}
 	
-	@RequestMapping("/regist")
-	public String regist(String account,String name,String password,String email) throws ParseException {
+	@PostMapping("/regist")
+	public String regist(@RequestBody Register model) throws ParseException {
+//		System.out.println("acc"+modle.account+"pw"+password+"name"+name+"email"+email);
+//		if(account==null||name==null||password==null||email==null) {
+//			return "-1";
+//		}
+		System.out.println(model);
 		int userId=service.findMaxUserId();
 		if(userId<1000) {
 			userId=1000;
@@ -61,12 +69,12 @@ public class RoleController {
 			userId++;
 		}
 		Role role=new Role();
-		role.setUserAccount(account);
-		role.setUserPassword(password);
+		role.setUserAccount(model.getAccount());
+		role.setUserPassword(model.getPassword());
 		role.setUserId(userId);
 		User user=new User();
-		user.setName(name);
-		user.setEmail(email);
+		user.setName(model.getName());
+		user.setEmail(model.getEmail());
 		user.setUserId(userId);
 		String birthdayDefault="1970-01-01";
 		DateFormat df=new SimpleDateFormat("yyyy-MM-dd");

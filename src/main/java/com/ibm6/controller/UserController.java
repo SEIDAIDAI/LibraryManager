@@ -46,4 +46,17 @@ public class UserController {
 		}
 	}
 	
+	@RequestMapping("/showUserList")
+	public List<User> showUserList(){
+//		List<User> users=userService.findAll();
+//		for(User user:users) {
+//			System.out.println(user.getUserId());
+//			if (user.getUserId()<1000) {
+//				users.remove(user);
+//			}
+//		}
+		return userService.findAll();
+		
+	}
+	
 }
