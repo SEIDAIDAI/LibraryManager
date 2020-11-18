@@ -13,6 +13,8 @@ public class User {
 	private String address;
 	private String description ;
 	
+	
+	
 	public int getUserId() {
 		return userId;
 	}
@@ -69,7 +71,7 @@ public class User {
 	}
 	@Override
 	public String toString() {
-		return "User [user_id=" + userId + ", name=" + name + ", gender=" + gender + ", age=" + age + ", email="
+		return "User [userId=" + userId + ", name=" + name + ", gender=" + gender + ", age=" + age + ", email="
 				+ email + ", birthday=" + birthday + ", phone=" + phone + ", address=" + address + ", description="
 				+ description + "]";
 	}

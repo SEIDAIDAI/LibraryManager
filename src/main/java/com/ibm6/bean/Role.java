@@ -7,13 +7,13 @@ public class Role {
 	private String userPassword;
 	private int  active;
 	private int admin;
-	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
+	
 	public int getUserId() {
 		return userId;
 	}

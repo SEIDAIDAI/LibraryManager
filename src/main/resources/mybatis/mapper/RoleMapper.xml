@@ -15,6 +15,14 @@
 	
 	<select id="findByAccount" resultMap="roleResultMap" parameterType="java.lang.String">
 		select * from role where user_account = #{account}
-	
 	</select>
+	
+	<insert id="insert" parameterType="com.ibm6.bean.Role">
+		insert into role(user_id,user_account,user_password) values(#{userId},#{userAccount},#{userPassword})
+	</insert>
+	
+	<select id="findMaxUserId" resultType="java.lang.Integer">
+		select max(user_id) from role
+	</select>
+	
 </mapper>

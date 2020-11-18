@@ -9,9 +9,10 @@ import com.ibm6.bean.User;
 
 @Mapper
 public interface UserMapper {
-	public void saveNewUser(User user);
+	public void insert(User user);
 	public int deleteById(int id);
 	public List<User> findAll ();
 	public User findById(int id);
 	public int updateById(User user);
+	public int updateByIdSelective(User user);
 }
