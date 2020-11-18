@@ -25,24 +25,25 @@ import com.ibm6.service.UserService;
 @RequestMapping()
 public class UserController {
 	
-	@Autowired
-	private UserMapper userMapper;
+//	@Autowired
+//	private UserMapper userMapper;
 	
 	@Autowired
 	private UserService userService;
 
 	@RequestMapping("/showUser")
-	public User showUser(String userId) {
-		User user = userMapper.findById(Integer.parseInt(userId));
-//		System.out.println(user);
-		return user;
+	public User showUser(String userId) {		
+		return userService.showUser(Integer.parseInt(userId));
 	}
 	
-	@RequestMapping("/updateById")
-	public int updateById(User user) {
-		
-		System.out.println(user);
-		return userService.updateById(user);
+	@RequestMapping("/updateMyInfo")
+	public User updateMyInfo(User user) {
+		if(userService.updateById(user)==1) {
+			return userService.showUser(user.getUserId());
+		}
+		else {
+			return user;
+		}
 	}
 	
 }

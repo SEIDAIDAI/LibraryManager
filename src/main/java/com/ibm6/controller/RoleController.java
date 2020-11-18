@@ -1,5 +1,8 @@
 package com.ibm6.controller;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -50,9 +53,13 @@ public class RoleController {
 	}
 	
 	@RequestMapping("/regist")
-	public String regist(String account,String name,String password,String email) {
+	public String regist(String account,String name,String password,String email) throws ParseException {
 		int userId=service.findMaxUserId();
-		userId++;
+		if(userId<1000) {
+			userId=1000;
+		}else {
+			userId++;
+		}
 		Role role=new Role();
 		role.setUserAccount(account);
 		role.setUserPassword(password);
@@ -61,7 +68,9 @@ public class RoleController {
 		user.setName(name);
 		user.setEmail(email);
 		user.setUserId(userId);
-		user.setBirthday(new Date());
+		String birthdayDefault="1970-01-01";
+		DateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+		user.setBirthday(df.parse(birthdayDefault));
 		try {
 			int re = service.regist(role,user);
 			if(re==-1) {
@@ -70,6 +79,7 @@ public class RoleController {
 		} catch (Exception e) {
 			return "-1";
 		}
+//		service.regist(role, user);
 		return "1";
 	}
 	

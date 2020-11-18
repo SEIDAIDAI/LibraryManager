@@ -15,4 +15,9 @@ public class UserService {
 		
 		return userMapper.updateByIdSelective(user);
 	}
+	
+	
+	public User showUser(int userId) {
+		return userMapper.findById(userId);
+	}
 }
