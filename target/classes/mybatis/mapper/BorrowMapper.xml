@@ -7,10 +7,22 @@
 	<resultMap type="com.ibm6.bean.Borrow" id="borrowResultMap">
 		<result property="userId" column="user_id" />
 		<result property="bookId" column="book_id" />
+		<result property="borrowTime" column="borrow_time" />
 		<result property="retTime" column="ret_time" />
-		<result property="retFlag" column="ret_flag" />		
-		<result property="validTime" column="valid_time" />	
+		<result property="retFlag" column="ret_flag" />
+		<result property="validTime" column="valid_time" />
+
+
+		<association property="book" javaType="com.ibm6.bean.Book">
+			<result property="bookId" column="book_id" />
+			<result property="bookName" column="book_name" />
+		</association>
 	</resultMap>
+
+	<select id="findAllBorrow" resultMap="borrowResultMap">
+		select * from borrow,book
+		where borrow.book_id = book.book_id
+	</select>
 
 </mapper>
 

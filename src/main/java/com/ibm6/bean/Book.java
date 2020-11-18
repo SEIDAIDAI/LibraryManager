@@ -1,10 +1,8 @@
 package com.ibm6.bean;
 
-<<<<<<< HEAD
+
 import java.util.Date;
 
-=======
->>>>>>> 5a2f70a0706f8b73ab75dc5e4c816a7768e5dd11
 public class Book {
 	private int bookId;
 	private String bookName;
@@ -12,14 +10,18 @@ public class Book {
 	private String type;
 	private String length;
 	private String theme;
-<<<<<<< HEAD
 	private Date storeDate;
-=======
-	private String storeDate;
->>>>>>> 5a2f70a0706f8b73ab75dc5e4c816a7768e5dd11
 	private int leftAmount;
 	private int uploadAmount;
 	private int downloadAmount;
+	private String author;
+	
+	public String getAuthor() {
+		return author;
+	}
+	public void setAuthor(String author) {
+		this.author = author;
+	}
 	public int getBookId() {
 		return bookId;
 	}
@@ -56,17 +58,11 @@ public class Book {
 	public void setTheme(String theme) {
 		this.theme = theme;
 	}
-<<<<<<< HEAD
+	
 	public Date getStoreDate() {
 		return storeDate;
 	}
 	public void setStoreDate(Date storeDate) {
-=======
-	public String getStoreDate() {
-		return storeDate;
-	}
-	public void setStoreDate(String storeDate) {
->>>>>>> 5a2f70a0706f8b73ab75dc5e4c816a7768e5dd11
 		this.storeDate = storeDate;
 	}
 	public int getLeftAmount() {
