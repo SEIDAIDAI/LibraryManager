@@ -5,6 +5,7 @@ public class Register {
 	private String password;
 	private String name;
 	private String email;
+	
 	public String getAccount() {
 		return account;
 	}
