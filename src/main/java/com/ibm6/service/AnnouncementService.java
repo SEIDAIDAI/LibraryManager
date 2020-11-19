@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.ibm6.bean.Announcement;
 import com.ibm6.bean.User;
@@ -14,23 +15,28 @@ public class AnnouncementService {
 	@Autowired
 	private AnnouncementMapper mapper;
 	
-	public int deleteById(Announcement announcement) {
+	public int deleteById(int id) {
 		
-		return mapper.deleteById(announcement);
+		return mapper.deleteById(id);
 	}
 	
-	public List<Announcement> selectAll() {
+	public List<Announcement> selectAll(int index) {
 		
-		return mapper.selectAll();
+		return mapper.selectAll(index);
 	}
 	
-	public Announcement getById(Announcement announcement) {
+	public Announcement getById(Announcement ann) {
 		
-		return mapper.getById(announcement);
+		return mapper.getById(ann);
 	}
 	
 	public int updateById(Announcement announcement) {
 		
 		return mapper.updateById(announcement);
+	}
+	
+	public int announcementInsert(Announcement announcement) {
+		
+		return mapper.announcementInsert(announcement);
 	}
 }
