@@ -7,11 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ibm6.bean.Book;
 import com.ibm6.model.BookLength;
 import com.ibm6.model.BookNation;
+import com.ibm6.model.BookStatus;
 import com.ibm6.model.BookTheme;
 import com.ibm6.model.BookType;
 import com.ibm6.service.BookService;
@@ -110,4 +112,17 @@ public class BookController {
 	public List<BookLength> bookLengths(){
 		return bookService.bookLengths();
 	}
+	
+	
+	@RequestMapping("/bookStatus/{index}")
+	public List<BookStatus> bookStatus(@PathVariable("index") Integer index){
+		List<Book> books = bookService.bookSearchByPage(index);
+//		List<BookStatus> book
+		for(Book bs:books) {
+			
+		}
+		return null;
+		
+	}
+	
 }
