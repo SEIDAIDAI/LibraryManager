@@ -25,4 +25,15 @@
 		select max(user_id) from role
 	</select>
 	
+	<update id="updateById"
+		parameterType="com.ibm6.bean.Role">
+		update role
+		<set>
+			<if test="userPassword!=null">
+				user_password=#{userPassword}
+			</if>
+		</set>
+		where user_id = #{userId}
+	</update>
+	
 </mapper>
