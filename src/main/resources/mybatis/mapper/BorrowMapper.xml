@@ -43,12 +43,15 @@
 		book.book_id and borrow.user_id = #{userId};
 	</select>
 
-	<select id="getDetailByLikeSearch" resultType="com.ibm6.model.BorrowDetail">
+	<select id="getDetailByLikeSearch" resultType="com.ibm6.model.BorrowBookInfo">
 		select
+		borrow.id,
 		book.book_name,
-		borrow.ret_time,
-		borrow.borrow_time,
-		borrow.valid_time
+		book.nation,
+		book.type,
+		book.theme,
+		book.length,
+		borrow.borrow_time
 		from borrow, book
 		where borrow.book_id = book.book_id
 		and borrow.user_id = #{userId} and book.book_name like '%${bookName}%'
@@ -56,17 +59,18 @@
 	
 	
 	<!-- 要改的 -->
-	<select id="selectBorrowByPage" resultType="com.ibm6.bean.Book">
+	<select id="selectBorrowByPage" resultType="com.ibm6.model.BorrowBookInfo">
 		select
+		borrow.id,
 		book.book_name,
 		book.nation,
 		book.type,
-		book.length,
 		book.theme,
-		book.summary
+		book.length,
+		borrow.borrow_time
 		from borrow, book
 		where borrow.book_id = book.book_id and borrow.user_id = #{userId}
-		limit #{index}, 2
+		limit #{index}, 5
 	</select>
 
 </mapper>
