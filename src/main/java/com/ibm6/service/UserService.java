@@ -1,5 +1,7 @@
 package com.ibm6.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,5 +16,15 @@ public class UserService {
 	public int updateById(User user) {
 		
 		return userMapper.updateByIdSelective(user);
+	}
+	
+	
+	public User showUser(int userId) {
+		return userMapper.findById(userId);
+	}
+	
+	
+	public List<User> findAll(){
+		return userMapper.findAll();
 	}
 }
