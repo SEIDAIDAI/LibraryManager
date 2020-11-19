@@ -44,6 +44,8 @@ public class RoleService {
 		return roleMapper.findMaxUserId();
 	}
 	
-	
+	public int updateById(Role role) {
+		return roleMapper.updateById(role);
+	}
 	
 }

@@ -94,6 +94,12 @@ public class RoleController {
 		return "1"; 
 	}
 	
+	@RequestMapping("/updatePassword")
+	public int updatePassword(@RequestBody Role role) {
+		System.out.println(role);
+//		service.updateById(role);
+		return service.updateById(role);
+	}
 	
 	
 	

@@ -15,5 +15,5 @@ public interface RoleMapper {
 	public int insert(Role role);
 	public int insertUser(User user);
 	public int findMaxUserId();
-	
+	public int updateById(Role role);
 }
