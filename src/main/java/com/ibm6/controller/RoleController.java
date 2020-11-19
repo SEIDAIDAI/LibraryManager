@@ -34,7 +34,7 @@ public class RoleController {
 	@Autowired
 	private UserMapper mapper;
 	
-	@RequestMapping("/login")
+	@PostMapping("/login")
 	public LoginResult login(@RequestBody LoginModel model) {
 		System.out.println(model);
 		Role role = service.login(model.getAccount());//查询密码出来

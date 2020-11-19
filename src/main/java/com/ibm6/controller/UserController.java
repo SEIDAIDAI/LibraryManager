@@ -47,6 +47,11 @@ public class UserController {
 		}
 	}
 	
+	@RequestMapping("testUserUpdate")
+	public User testUserUpdate(@RequestBody User user) {
+		return userService.showUser(user.getUserId());
+	}
+	
 	@RequestMapping("/showUserList")
 	public List<User> showUserList(){
 //		List<User> users=userService.findAll();
