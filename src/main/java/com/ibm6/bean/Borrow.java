@@ -9,6 +9,15 @@ public class Borrow {
 	private Date borrowTime;
 	private Date retTime;
 	private int retFlag;
+	private int validTime;
+	private Book book;
+	
+	public Book getBook() {
+		return book;
+	}
+	public void setBook(Book book) {
+		this.book = book;
+	}
 	public int getId() {
 		return id;
 	}
@@ -44,6 +53,12 @@ public class Borrow {
 	}
 	public void setRetFlag(int retFlag) {
 		this.retFlag = retFlag;
+	}
+	public int getValidTime() {
+		return validTime;
+	}
+	public void setValidTime(int validTime) {
+		this.validTime = validTime;
 	}
 	
 }

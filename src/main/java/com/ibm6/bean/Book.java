@@ -14,6 +14,7 @@ public class Book {
 	private int uploadAmount;
 	private int downloadAmount;
 	private String author;
+
 	public int getBookId() {
 		return bookId;
 	}

@@ -1,7 +1,6 @@
 package com.ibm6.bean;
 
 public class Role {
-	
 	private int id;
 	private int userId;
 	private String userAccount;
