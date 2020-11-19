@@ -1,5 +1,6 @@
 package com.ibm6.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,14 +8,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ibm6.bean.Book;
 import com.ibm6.model.BookLength;
 import com.ibm6.model.BookNation;
+import com.ibm6.model.BookStatus;
 import com.ibm6.model.BookTheme;
 import com.ibm6.model.BookType;
+import com.ibm6.model.BorrowList;
 import com.ibm6.service.BookService;
+import com.ibm6.service.borrowService;
 
 @RestController
 public class BookController {
@@ -22,6 +27,9 @@ public class BookController {
 	
 	@Autowired
 	private BookService bookService;
+	
+	@Autowired
+	private borrowService borrowService;
 	
 	@PostMapping("/BookCount")
 	public int bookCount()
@@ -110,4 +118,31 @@ public class BookController {
 	public List<BookLength> bookLengths(){
 		return bookService.bookLengths();
 	}
+	
+	
+	@RequestMapping("/bookStatus/{index}/{userId}")
+	public List<BookStatus> bookStatus(@PathVariable("index") Integer index,@PathVariable("userId") Integer userId){
+		List<Book> books = bookService.bookSearchByPage(index*5);
+		List<Integer> mybooks=new ArrayList<Integer>();
+		List<BorrowList> borrowList = borrowService.getBorrowList(userId);
+		for(BorrowList bl:borrowList) {
+			mybooks.add(bl.getBookId());
+		}
+		List<BookStatus> bookStatuses=new ArrayList<BookStatus>();
+		for(Book bs:books) {
+			BookStatus temp=new BookStatus();
+			for(Integer i:mybooks) {
+				if (i==bs.getBookId()) {
+					temp.setStatus(1);
+				}else {
+					temp.setStatus(0);
+				}
+			}
+			temp.setBook(bs);
+			bookStatuses.add(temp);
+		}
+		return bookStatuses;
+		
+	}
+	
 }

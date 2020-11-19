@@ -63,7 +63,8 @@ public class RoleController {
 //		if(account==null||name==null||password==null||email==null) {
 //			return "-1";
 //		}
-
+		System.out.println(model);
+		
 		int userId=service.findMaxUserId();
 		if(userId<1000) {
 			userId=1000;
@@ -93,6 +94,12 @@ public class RoleController {
 		return "1"; 
 	}
 	
+	@RequestMapping("/updatePassword")
+	public int updatePassword(@RequestBody Role role) {
+		System.out.println(role);
+//		service.updateById(role);
+		return service.updateById(role);
+	}
 	
 	
 	

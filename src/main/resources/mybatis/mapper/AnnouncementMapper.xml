@@ -16,15 +16,9 @@
 		<result property="expireFlag" column="expire_flag" />
 	</resultMap>
 
-	<insert id="saveNewUser"
-		parameterType="com.ibm6.bean.Announcement">
-		insert into announcement(id, title, theme, content,
-		publish_date, publisher_id, expire_date,
-		expire_flag)
-		values(#{id},
-		#{title}, #{theme}, #{content}, #{publishDate}, #{publisherId},
-		#{expireDate},
-		#{expireFlag});
+	<insert id="announcementInsert" parameterType="com.ibm6.bean.Announcement">
+		insert into announcement(title, theme, content,publish_date, publisher_id, expire_date,expire_flag)
+		values(#{title}, #{theme}, #{content}, #{publishDate}, #{publisherId},#{expireDate},#{expireFlag});
 	</insert>
 
 	<delete id="deleteById" parameterType="int">

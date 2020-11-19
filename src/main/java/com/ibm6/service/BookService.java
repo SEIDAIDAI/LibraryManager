@@ -17,24 +17,28 @@ public class BookService {
 	@Autowired
 	private BookMapper bookMapper;
 	
+	//返回书总数
 	public int totalBookAmount()
 	{
 		int re = bookMapper.getCount();
 		System.out.println(re);
 		return re;
 	}
-		
+	
+	//根据书四个条件查询
 	public List<Book> bookSearchByType(Book book) {
 		List<Book> bookList = bookMapper.selectByCondition(book);
 		
 		return bookList;
 	}
 	
+	//书详情
 	public Book showBookInfo(Book book) {
 		Book re = bookMapper.getById(book);
 		return re;
 	}
 	
+	//关键字查询  书名和作者
 	public List<Book> bookSearchByKeyword(Book book)
 	{
 		List<Book> bookList = bookMapper.selectByKeyword(book);
@@ -42,26 +46,27 @@ public class BookService {
 		return bookList;
 	}
 	
+	//分页查询
 	public List<Book> bookSearchByPage(Integer index)
 	{
 		List<Book> bookList = bookMapper.selectByPage(index);
 
 		return bookList;
 	}
-	
+	//书籍信息更新
 	public int bookInfoUpdate(Book book)
 	{
 		int re = bookMapper.updateById(book);
 
 		return re;
 	}
-	
+	//新增书籍
 	public int bookInsert(Book book)
 	{
 		int re = bookMapper.saveNewBook(book);
 		return re;
 	}
-	
+	//删除书籍
 	public int bookDelete(Book book)
 	{
 		int re = bookMapper.deleteById(book);
