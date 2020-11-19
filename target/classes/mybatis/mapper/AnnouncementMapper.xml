@@ -4,59 +4,68 @@
 <!-- mapper标签要指定namespace属性，不然会报错，可看做包名 -->
 
 <mapper namespace="com.ibm6.mapper.AnnouncementMapper">
-	<resultMap type="com.ibm6.bean.Announcement" id="announcementResultMap">
+	<resultMap type="com.ibm6.bean.Announcement"
+		id="announcementResultMap">
+		<result property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="theme" column="theme" />
+		<result property="content" column="content" />
 		<result property="publisherId" column="publisher_id" />
 		<result property="publishDate" column="publish_date" />
 		<result property="expireDate" column="expire_date" />
-		<result property="expireFlag" column="expire_flag" />	
+		<result property="expireFlag" column="expire_flag" />
 	</resultMap>
-	
-	<insert id="saveNewUser" parameterType="com.ibm6.bean.User">
-		insert into user(user_id, name, gender, age, email, birthday, phone,
-		address, description)
-		values(#{user_id}, #{name}, #{gender}, #{age}, #{email}, #{birthday}, #{phone},
-		#{address}, #{description});
+
+	<insert id="saveNewUser"
+		parameterType="com.ibm6.bean.Announcement">
+		insert into announcement(id, title, theme, content,
+		publish_date, publisher_id, expire_date,
+		expire_flag)
+		values(#{id},
+		#{title}, #{theme}, #{content}, #{publishDate}, #{publisherId},
+		#{expireDate},
+		#{expireFlag});
 	</insert>
-	
+
 	<delete id="deleteById" parameterType="int">
-		delete from user where user_id = #{id}
+		delete from announcement
+		where id = #{id}
 	</delete>
 
-	<select id="findAll" resultType="com.ibm6.bean.User">
-		select * from user
+	<select id="selectAll" resultType="com.ibm6.bean.Announcement">
+		select * from announcement
 	</select>
-	
-	<select id="findById" resultType="com.ibm6.bean.User">
-		select * from user where user_id = #{id}
+
+	<select id="getById" resultType="com.ibm6.bean.Announcement">
+		select * from announcement where
+		id = #{id}
 	</select>
-	
-	<update id="updateById" parameterType="com.ibm6.bean.User">
-		update user set 
-		<if test="name!=null">
-			name=#{name}
-		</if>
-		<if test="gender!=null">
-			gender=#{gender}
-		</if>
-		<if test="age!=null">
-			age = #{age}
-		</if>
-		<if test="email!=null">
-			email = #{email}
-		</if>
-		<if test="birthday!=null">
-			birthday=#{birthday}
-		</if>
-		<if test="phone!=null">
-			phone=#{phone}
-		</if>
-		<if test="address!=null">
-			address=#{address}
-		</if>
-		<if test="description!=null">
-			description=#{description}
-		</if>
-		where user_id = #{user_id}
+
+	<update id="updateById"
+		parameterType="com.ibm6.bean.Announcement">
+		update announcement
+		<set>
+			<if test="title!=null">
+				title=#{title},
+			</if>
+			<if test="theme!=null">
+				theme=#{theme},
+			</if>
+			<if test="content!=null"> 
+				content = #{content}, 
+			</if>
+			<if test="publishDate!=null">
+				publish_date = #{publishDate},
+			</if>
+			<if test="expireDate!=null"> 
+				expire_date=#{expireDate}, 
+			</if>
+			<if test="expireFlag!=null"> 
+				expire_flag=#{expireFlag} 
+			</if>
+		</set>
+
+		where id = #{id}
 	</update>
 
 </mapper>

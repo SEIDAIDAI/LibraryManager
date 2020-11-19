@@ -1,6 +1,8 @@
 package com.ibm6.controller;
 
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+
 import java.text.DateFormat;
 import java.util.List;
 
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,7 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ibm6.bean.Book;
 import com.ibm6.bean.Borrow;
 import com.ibm6.bean.User;
+import com.ibm6.model.BorrowByPage;
 import com.ibm6.model.BorrowDetail;
+import com.ibm6.model.BorrowList;
+import com.ibm6.model.UserBorrowLikeSearch;
 import com.ibm6.service.borrowService;
 
 @RestController
@@ -27,31 +33,40 @@ public class BorrowController {
 	private borrowService service;
 	
 //	借阅详情
-	@GetMapping("/borrowHistory/{userId}")
-	public String borrowHistory(@PathVariable("userId") int userId) {
-		List<Borrow> borrow = service.findAllBorrow();
-		String string = "";
-		for(Borrow borrow1:borrow) {
-			if (borrow1.getUserId() == userId) {
-				DateFormat df = DateFormat.getDateInstance();
-				string = string +" 书名："+ borrow1.getBook().getBookName() +",借阅时间："+df.format(borrow1.getBorrowTime())+",应还时间："+df.format(borrow1.getRetTime())+",有效时间："+borrow1.getValidTime()+"\n";				
-			}
-		}		
-		return string;
-	}
-//	输入书名模糊查询
-	@GetMapping("/searchHisByBookName/{userId}/{bookName}")
-	public String searchHisByBookName(@PathVariable("userId") int userId,@PathVariable("bookName") String book_name) {
-		List<Borrow> borrow = service.findAllBorrow();
-		String string = "";
-		for(Borrow borrow1:borrow) {
-			if (book_name.equals(borrow1.getBook().getBookName())&&borrow1.getUserId()==userId) {
-				DateFormat df = DateFormat.getDateInstance();
-				string = string +" 书名："+ borrow1.getBook().getBookName() +",借阅时间："+df.format(borrow1.getBorrowTime())+",应还时间："+df.format(borrow1.getRetTime())+",有效时间："+borrow1.getValidTime()+"\n";				
-			}
-		}		
-		return string;
+	@GetMapping("/borrowInfo/{id}")
+	public BorrowDetail borrowHistory(@PathVariable("id") int id) {
+		BorrowDetail borrow = service.getBorrowInfo(id);		
+		return borrow;
 	}
 	
+	//通过userId返回书列表信息
+	@GetMapping("/borrowList/{userId}")
+	public List<BorrowList> borrowBookInfo(@PathVariable("userId") int userId) {
+		List<BorrowList> borrow = service.getBorrowList(userId);	
+		return borrow;
+	}
 	
+
+//	输入书名和用户名查询
+	//在上面查询的结果上  加上书名进行过滤
+	@PostMapping("/borrowUserLikeSearch")
+	public BorrowDetail searchHisByLikeSearch(@RequestBody UserBorrowLikeSearch userBorrowLikeSearch) {
+		BorrowDetail borrowDetail=service.borrowUserLikeSearch(userBorrowLikeSearch);
+		return borrowDetail;
+	}
+	
+
+	@GetMapping("/borrowCount/{userId}")
+	public int BorrowCount(@PathVariable("userId") int userId)
+	{
+		int re = service.getBorrowTotal(userId);
+		return re;
+	}
+	
+	@PostMapping("/borrowPage")
+	public List<Book> BorrowPage(@RequestBody BorrowByPage borrowByPage)
+	{
+		List<Book> re = service.getBorrowByPage(borrowByPage);
+		return re;
+	}
 }

@@ -18,10 +18,55 @@
 			<result property="bookName" column="book_name" />
 		</association>
 	</resultMap>
-
-	<select id="findAllBorrow" resultMap="borrowResultMap">
-		select * from borrow,book
+	<select id="getBorrowById"
+		resultType="com.ibm6.model.BorrowDetail">
+		select
+		book.book_name,
+		borrow.ret_time,
+		borrow.borrow_time,
+		borrow.valid_time
+		from borrow, book
 		where borrow.book_id = book.book_id
+		and borrow.id = #{id};
+	</select>
+
+	<select id="selectBorrowByUserId" resultType="com.ibm6.model.BorrowList">
+		select
+		book.book_name,
+		book.author,
+		book.summary,
+		borrow.id,
+		borrow.book_id,
+		borrow.ret_time
+		from borrow, book
+		where borrow.book_id =
+		book.book_id and borrow.user_id = #{userId};
+	</select>
+
+	<select id="getDetailByLikeSearch" resultType="com.ibm6.model.BorrowDetail">
+		select
+		book.book_name,
+		borrow.ret_time,
+		borrow.borrow_time,
+		borrow.valid_time
+		from borrow, book
+		where borrow.book_id = book.book_id
+		and borrow.user_id = #{userId} and book.book_name like '%${bookName}%'
+	</select>
+	
+	
+	<!-- 要改的 -->
+	<select id="selectBorrowByPage" resultType="com.ibm6.bean.Book">
+		select
+		book.book_name,
+		book.nation,
+		book.type,
+		book.length,
+		book.theme,
+		book.summary
+		from borrow, book
+		where borrow.book_id = book.book_id and borrow.user_id = #{userId}
+		limit #{index}, 2
 	</select>
 
 </mapper>

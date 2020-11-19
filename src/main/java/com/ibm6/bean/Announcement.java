@@ -8,7 +8,7 @@ public class Announcement {
 	private String theme;
 	private String content;
 	private Date publishDate;
-	private int publishId;
+	private int publisherId;
 	private Date expireDate;
 	private int expireFlag;
 	public int getId() {
@@ -41,11 +41,12 @@ public class Announcement {
 	public void setPublishDate(Date publishDate) {
 		this.publishDate = publishDate;
 	}
-	public int getPublishId() {
-		return publishId;
+	
+	public int getPublisherId() {
+		return publisherId;
 	}
-	public void setPublishId(int publishId) {
-		this.publishId = publishId;
+	public void setPublisherId(int publisherId) {
+		this.publisherId = publisherId;
 	}
 	public Date getExpireDate() {
 		return expireDate;
