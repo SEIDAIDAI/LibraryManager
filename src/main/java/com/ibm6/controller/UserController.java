@@ -32,12 +32,13 @@ public class UserController {
 	private UserService userService;
 
 	@RequestMapping("/showUser")
-	public User showUser(String userId) {		
-		return userService.showUser(Integer.parseInt(userId));
+	public User showUser(@RequestBody User user) {
+		user=userService.showUser(user.getUserId());
+		return user;
 	}
 	
 	@RequestMapping("/updateMyInfo")
-	public User updateMyInfo(User user) {
+	public User updateMyInfo(@RequestBody User user) {
 		if(userService.updateById(user)==1) {
 			return userService.showUser(user.getUserId());
 		}

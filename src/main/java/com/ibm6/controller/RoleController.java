@@ -19,6 +19,7 @@ import com.alibaba.fastjson.JSON;
 import com.ibm6.bean.Role;
 import com.ibm6.bean.User;
 import com.ibm6.mapper.UserMapper;
+import com.ibm6.model.LoginModel;
 import com.ibm6.model.LoginResult;
 import com.ibm6.model.Register;
 import com.ibm6.service.RoleService;
@@ -34,12 +35,13 @@ public class RoleController {
 	private UserMapper mapper;
 	
 	@RequestMapping("/login")
-	public LoginResult login(String account,String password) {
-		Role role = service.login(account);//查询密码出来
+	public LoginResult login(@RequestBody LoginModel model) {
+		System.out.println(model);
+		Role role = service.login(model.getAccount());//查询密码出来
 		LoginResult result=new LoginResult();
 		result.setResultCode(-1);
 		if(role!=null) {    //不为空证明有这个账号
-			if(password.equals(role.getUserPassword())) { //对比密码	
+			if(model.getPassword().equals(role.getUserPassword())) { //对比密码	
 				result.setResultCode(1);
 				result.setUserId(role.getUserId());
 				if (role.getAdmin()==1) {
