@@ -19,25 +19,41 @@ public class AnnouncementController {
 	@Autowired
 	private AnnouncementService service;
 	
-	@GetMapping("/selectAll")
-	public List<Announcement> selectAllAnnouncement() {
-		return service.selectAll();
+	//	分页查询
+	@GetMapping("/selectPage/{index}")
+	public List<Announcement> selectAllAnnouncement(@PathVariable("index") int index) {
+		return service.selectAll(index*5);
 	}
 	
-	@GetMapping("/getById/{id}")
-	public Announcement getAnnouncementById(Announcement announcement,@PathVariable("id") Integer id){
-		Announcement ann=service.getById(announcement);
-		return ann;
+	//  按公告表的ID查询单条公告
+	@PostMapping("/getById")
+	public Announcement getAnnouncementById(@RequestBody Announcement ann){
+	
+		return service.getById(ann);
 	}
 	
+//	@GetMapping("/getById/{id}")
+//	public Announcement getAnnouncementById(@PathVariable("id") Integer id){
+//		Announcement ann=service.getById(id);
+//		return ann;
+//	}
+	
+	//  更新公告表中的信息
 	@PostMapping("/updateAnnouncement")
 	public int updateAnnouncementById(@RequestBody Announcement ann) {
 		return service.updateById(ann);
 	}
 	
+	//  按公告表的ID删除公告信息
 	@GetMapping("/deleteAnnouncement/{id}")
-	public int deleteAnnouncement(Announcement announcement,@PathVariable("id") Integer id) {
-		return service.deleteById(announcement);
+	public int deleteAnnouncement(@PathVariable("id") Integer id) {
+		return service.deleteById(id);
 	}
 	
+	//  增加一条公告
+	@PostMapping("/addAnnouncement")
+	public int addAnnouncement(@RequestBody Announcement ann) {
+		int re=service.announcementInsert(ann);
+		return re;
+	}
 }

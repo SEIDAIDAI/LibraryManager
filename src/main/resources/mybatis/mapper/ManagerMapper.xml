@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ibm6.mapper.ManagerMapper">
+	
+
+	<delete id="deleteUserByUserId">
+		delete from user where user_id=#{userId}
+
+	</delete>
+
+	<update id="updateRoleByUserId">
+		update role set
+		active=0
+		where user_id = #{userId}
+	</update>
+	
+	<select id="findAll" resultType="com.ibm6.bean.User">
+	select * from user
+	</select>
+</mapper>

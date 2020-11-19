@@ -3,6 +3,7 @@ package com.ibm6.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +17,7 @@ import com.ibm6.service.borrowService;
 @RestController
 public class ManagerController {
 	@Autowired
-	private ManagerService service;
+	private ManagerService managerService;
 	
 	@Autowired
 	private borrowService borrowService;
@@ -44,8 +45,25 @@ public class ManagerController {
 		
 		Book book = new Book();
 		book.setBookId(bookId);
-		return service.findBookById(book);
+		return managerService.findBookById(book);
 	}
 	
-	
+	@RequestMapping("/deleteUser/{userId}")
+	public String deleteUser(@PathVariable("userId") Integer userId) {
+//		try {
+//			service.deleteUser(userId);
+//			return 1;
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//		}
+//		System.out.println(userId);
+//		System.out.println(managerService.deleteUser(userId));
+//		managerService.deleteUser(userId);
+//		Book book=new Book();
+//		book.setBookId(5);
+		managerService.deleteUser(userId);
+		
+		return "1";
+		
+	}
 }

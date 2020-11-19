@@ -5,9 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ibm6.bean.Book;
-import com.ibm6.bean.Borrow;
 import com.ibm6.mapper.BorrowMapper;
+import com.ibm6.model.BorrowBookInfo;
 import com.ibm6.model.BorrowByPage;
 import com.ibm6.model.BorrowDetail;
 import com.ibm6.model.BorrowList;
@@ -29,8 +28,8 @@ public class borrowService {
 		return re;
 	}
 	
-	public BorrowDetail borrowUserLikeSearch(UserBorrowLikeSearch userBorrowLikeSearch) {
-		BorrowDetail borrowDetail=mapper.getDetailByLikeSearch(userBorrowLikeSearch);
+	public List<BorrowBookInfo> borrowUserLikeSearch(UserBorrowLikeSearch userBorrowLikeSearch) {
+		List<BorrowBookInfo> borrowDetail = mapper.getDetailByLikeSearch(userBorrowLikeSearch);
 		return borrowDetail;
 	}
 
@@ -40,9 +39,10 @@ public class borrowService {
 		return re.size();
 	}
 	
-	public List<Book> getBorrowByPage(BorrowByPage borrowByPage)
+	public List<BorrowBookInfo> getBorrowByPage(BorrowByPage borrowByPage)
 	{
-		List<Book> re = mapper.selectBorrowByPage(borrowByPage);
+		borrowByPage.setIndex(borrowByPage.getIndex() * 5);
+		List<BorrowBookInfo> re = mapper.selectBorrowByPage(borrowByPage);
 		return re;
 	}
 	
