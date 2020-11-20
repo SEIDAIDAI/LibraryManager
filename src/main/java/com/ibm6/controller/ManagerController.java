@@ -50,20 +50,12 @@ public class ManagerController {
 	
 	@RequestMapping("/deleteUser/{userId}")
 	public String deleteUser(@PathVariable("userId") Integer userId) {
-//		try {
-//			service.deleteUser(userId);
-//			return 1;
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
-//		System.out.println(userId);
-//		System.out.println(managerService.deleteUser(userId));
-//		managerService.deleteUser(userId);
-//		Book book=new Book();
-//		book.setBookId(5);
-		managerService.deleteUser(userId);
+
+		if (managerService.deleteUser(userId)==1) {
+			return "1";
+		}
 		
-		return "1";
+		return "0";
 		
 	}
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ibm6.bean.Borrow;
 import com.ibm6.model.BorrowBookInfo;
 import com.ibm6.model.BorrowByPage;
 import com.ibm6.model.BorrowDetail;
@@ -86,5 +87,34 @@ public class BorrowController {
 		List<BorrowBookInfo> re = service.getBorrowByPage(borrowByPage);
 		return re;
 	}
+	
+	
+	//功能: 用户进行图书借阅
+	//输入参数  
+	/*
+	 * int userId; 
+	 * int bookId; 
+	 */
+	//返回结果 int  1表示借阅成功     0表示借阅失败    2 表示这本书用户已借阅    3没有库存
+	@PostMapping("/borrowBook")
+	public int BorrowBook(@RequestBody Borrow borrow)
+	{
+		int re = service.borrowBook(borrow);
+		return re;
+	}
+	
 
+	//功能: 用户借阅书籍归还
+	//输入参数:  userId  bookId
+	//输出参数: int  1表示成功  0表示成功
+	@PostMapping("/borrowReturn")
+	public int BorrowReturn(@RequestBody Borrow borrow)
+	{
+		//需要修改用户的借阅记录  ret_flag修改为 0 
+		//需要修改书籍的数量 left_amount 增加 1
+		int re = service.borrowReturn(borrow);
+		return re;
+	}
+	
+	//统计功能  年月日  	
 }
