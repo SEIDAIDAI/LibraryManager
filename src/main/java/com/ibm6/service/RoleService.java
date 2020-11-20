@@ -48,4 +48,14 @@ public class RoleService {
 		return roleMapper.updateById(role);
 	}
 	
+	
+	public int findActiveRole(String account) {
+		if(roleMapper.findActiveRole(account)==null) {
+			return 0;
+		}else {
+			return 1;
+		}
+		
+	}
+	
 }

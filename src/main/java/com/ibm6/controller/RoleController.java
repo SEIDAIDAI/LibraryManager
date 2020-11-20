@@ -40,7 +40,7 @@ public class RoleController {
 		Role role = service.login(model.getAccount());//查询密码出来
 		LoginResult result=new LoginResult();
 		result.setResultCode(-1);
-		if(role!=null) {    //不为空证明有这个账号
+		if(role!=null&&role.getActive()!=0) {    //不为空证明有这个账号
 			if(model.getPassword().equals(role.getUserPassword())) { //对比密码	
 				result.setResultCode(1);
 				result.setUserId(role.getUserId());
@@ -59,12 +59,10 @@ public class RoleController {
 	
 	@PostMapping("/regist")
 	public String regist(@RequestBody Register model) throws ParseException {
-//		System.out.println("acc"+modle.account+"pw"+password+"name"+name+"email"+email);
-//		if(account==null||name==null||password==null||email==null) {
-//			return "-1";
-//		}
-		System.out.println(model);
-		
+//		System.out.println(model);
+		if (service.findActiveRole(model.getAccount())==1) {
+			return "0";
+		}
 		int userId=service.findMaxUserId();
 		if(userId<1000) {
 			userId=1000;
