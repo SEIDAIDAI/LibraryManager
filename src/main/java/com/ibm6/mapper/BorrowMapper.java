@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ibm6.bean.Book;
 import com.ibm6.bean.Borrow;
 import com.ibm6.model.BorrowBookInfo;
 import com.ibm6.model.BorrowByPage;
@@ -21,5 +22,8 @@ public interface BorrowMapper {
 	public List<BorrowBookInfo> selectBorrowByPage(BorrowByPage borrowByPage);
 	public int saveBorrowInfo(Borrow borrow);
 	public int updateBorrowFlag(Borrow borrow);
-	public int updateBookUpload(Borrow borrow);
+	public int updateBookUploadInc(Borrow borrow);
+	public int updateBookUploadDec(Borrow borrow);
+	public List<String> getBookExists(Borrow borrow);
+	public Book getBookLeftAmount(Borrow borrow);
 }

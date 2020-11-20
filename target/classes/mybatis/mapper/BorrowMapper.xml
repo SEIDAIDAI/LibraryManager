@@ -77,11 +77,30 @@
 		where user_id = #{userId}
 	</update>
 	
-	<update id="updateBookUpload">
+	<update id="updateBookUploadInc">
 		update book
-		set left_amount += 1
+		set left_amount = left_amount + 1
 		where book.book_id = #{bookId} 
 	</update>
+	
+	<update id="updateBookUploadDec">
+		update book
+		set left_amount = left_amount - 1
+		where book.book_id = #{bookId} 
+	</update>
+	
+	<select id="getBookExists" resultType="String">
+		select
+		borrow.book_id
+		from borrow
+		where borrow.user_id = #{userId} and borrow.book_id = #{bookId}
+	</select>
+	
+	<select id="getBookLeftAmount" resultType="com.ibm6.bean.Book">
+		select * 
+		from book
+		where book_id = #{bookId};
+	</select>
 </mapper>
 
 

@@ -95,7 +95,7 @@ public class BorrowController {
 	 * int userId; 
 	 * int bookId; 
 	 */
-	//返回结果 int  1表示插入成功     0表示插入失败
+	//返回结果 int  1表示借阅成功     0表示借阅失败    2 表示这本书用户已借阅    3没有库存
 	@PostMapping("/borrowBook")
 	public int BorrowBook(@RequestBody Borrow borrow)
 	{
@@ -116,7 +116,5 @@ public class BorrowController {
 		return re;
 	}
 	
-	//统计功能  年月日  
-	
-		
+	//统计功能  年月日  	
 }
