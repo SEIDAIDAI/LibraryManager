@@ -5,10 +5,10 @@ import java.util.Date;
 public class Book {
 	private int bookId;
 	private String bookName;
-	private String nation;
-	private String type;
-	private String length;
-	private String theme;
+	private int nation;
+	private int type;
+	private int length;
+	private int theme;
 	private Date storeDate;
 	private int leftAmount;
 	private int uploadAmount;
@@ -27,28 +27,29 @@ public class Book {
 	public void setBookName(String bookName) {
 		this.bookName = bookName;
 	}
-	public String getNation() {
+	
+	public int getNation() {
 		return nation;
 	}
-	public void setNation(String nation) {
+	public void setNation(int nation) {
 		this.nation = nation;
 	}
-	public String getType() {
+	public int getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public void setType(int type) {
 		this.type = type;
 	}
-	public String getLength() {
+	public int getLength() {
 		return length;
 	}
-	public void setLength(String length) {
+	public void setLength(int length) {
 		this.length = length;
 	}
-	public String getTheme() {
+	public int getTheme() {
 		return theme;
 	}
-	public void setTheme(String theme) {
+	public void setTheme(int theme) {
 		this.theme = theme;
 	}
 	public Date getStoreDate() {
