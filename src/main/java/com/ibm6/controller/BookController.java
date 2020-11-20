@@ -134,6 +134,7 @@ public class BookController {
 			for(Integer i:mybooks) {
 				if (i==bs.getBookId()) {
 					temp.setStatus(1);
+					break;
 				}else {
 					temp.setStatus(0);
 				}
