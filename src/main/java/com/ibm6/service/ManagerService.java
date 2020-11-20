@@ -29,10 +29,12 @@ public class ManagerService {
 	
 	
 	public int deleteUser(Integer userId) {
-		mapper.deleteUserByUserId(userId);
+		int ret=mapper.deleteUserByUserId(userId);
 		mapper.updateRoleByUserId(userId);
-		
-		return 1;
+		if (ret==1) {
+			return 1;
+		}
+		return 0;
 	}
 	
 	
