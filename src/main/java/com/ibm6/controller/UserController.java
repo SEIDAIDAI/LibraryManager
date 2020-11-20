@@ -34,6 +34,7 @@ public class UserController {
 	@RequestMapping("/showUser")
 	public User showUser(@RequestBody User user) {
 		user=userService.showUser(user.getUserId());
+		System.out.println(user);
 		return user;
 	}
 	

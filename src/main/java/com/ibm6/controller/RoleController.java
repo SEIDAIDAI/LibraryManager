@@ -1,24 +1,16 @@
 package com.ibm6.controller;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.fastjson.JSON;
 import com.ibm6.bean.Role;
 import com.ibm6.bean.User;
-import com.ibm6.mapper.UserMapper;
 import com.ibm6.model.LoginModel;
 import com.ibm6.model.LoginResult;
 import com.ibm6.model.Register;
@@ -30,9 +22,6 @@ import com.ibm6.service.RoleService;
 public class RoleController {
 	@Autowired
 	private RoleService service;
-	
-	@Autowired
-	private UserMapper mapper;
 	
 	@PostMapping("/login")
 	public LoginResult login(@RequestBody LoginModel model) {
@@ -77,9 +66,6 @@ public class RoleController {
 		user.setName(model.getName());
 		user.setEmail(model.getEmail());
 		user.setUserId(userId);
-		String birthdayDefault="1970-01-01";
-		DateFormat df=new SimpleDateFormat("yyyy-MM-dd");
-		user.setBirthday(df.parse(birthdayDefault));
 		try {
 			int re = service.regist(role,user);
 			if(re==-1) {

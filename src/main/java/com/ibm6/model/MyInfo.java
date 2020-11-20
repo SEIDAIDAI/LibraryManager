@@ -1,14 +1,13 @@
-package com.ibm6.bean;
+package com.ibm6.model;
 
-import java.sql.Date;
 
-public class User {
+public class MyInfo {
 	private int userId;
 	private String name;
 	private String gender;
 	private String age; 
 	private String email;
-	private Date birthday;
+	private String birthday;
 	private String phone;
 	private String address;
 	private String description ;
@@ -45,10 +44,10 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Date getBirthday() {
+	public String getBirthday() {
 		return birthday;
 	}
-	public void setBirthday(Date birthday) {
+	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
 	public String getPhone() {
@@ -69,12 +68,4 @@ public class User {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	@Override
-	public String toString() {
-		return "User [userId=" + userId + ", name=" + name + ", gender=" + gender + ", age=" + age + ", email="
-				+ email + ", birthday=" + birthday + ", phone=" + phone + ", address=" + address + ", description="
-				+ description + "]";
-	}
-	
-	
 }
