@@ -11,12 +11,6 @@
 		<result property="retTime" column="ret_time" />
 		<result property="retFlag" column="ret_flag" />
 		<result property="validTime" column="valid_time" />
-
-
-		<association property="book" javaType="com.ibm6.bean.Book">
-			<result property="bookId" column="book_id" />
-			<result property="bookName" column="book_name" />
-		</association>
 	</resultMap>
 	<select id="getBorrowById"
 		resultType="com.ibm6.model.BorrowDetail">
@@ -39,8 +33,7 @@
 		borrow.book_id,
 		borrow.ret_time
 		from borrow, book
-		where borrow.book_id =
-		book.book_id and borrow.user_id = #{userId};
+		where borrow.book_id = book.book_id and borrow.user_id = #{userId};
 	</select>
 
 	<select id="getDetailByLikeSearch" resultType="com.ibm6.model.BorrowBookInfo">
@@ -72,7 +65,23 @@
 		where borrow.book_id = book.book_id and borrow.user_id = #{userId}
 		limit #{index}, 5
 	</select>
-
+	
+	<insert id="saveBorrowInfo">
+		insert into borrow(user_id, book_id, borrow_time, ret_time, valid_time)
+		values(#{userId}, #{bookId}, #{borrowTime}, #{retTime}, #{validTime})
+	</insert>
+	
+	<update id="updateBorrowFlag">
+		update borrow
+		set ret_flag = 1
+		where user_id = #{userId}
+	</update>
+	
+	<update id="updateBookUpload">
+		update book
+		set left_amount += 1
+		where book.book_id = #{bookId} 
+	</update>
 </mapper>
 
 

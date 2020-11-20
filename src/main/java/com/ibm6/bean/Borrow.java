@@ -10,14 +10,7 @@ public class Borrow {
 	private Date retTime;
 	private int retFlag;
 	private int validTime;
-	private Book book;
 	
-	public Book getBook() {
-		return book;
-	}
-	public void setBook(Book book) {
-		this.book = book;
-	}
 	public int getId() {
 		return id;
 	}
