@@ -57,7 +57,7 @@ public class RoleController {
 		}
 	}
 	
-	@PostMapping("/regist")
+	@RequestMapping("/regist")
 	public String regist(@RequestBody Register model) throws ParseException {
 //		System.out.println(model);
 		if (service.findActiveRole(model.getAccount())==1) {
