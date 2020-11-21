@@ -88,11 +88,12 @@
 		summary 
 		from Book
 		<where>
-			<if test="bookName != null">
-				book_name like CONCAT(CONCAT('%',#{bookName},'%')) 
-				or author like CONCAT(CONCAT('%',#{bookName},'%'))
+			<if test="book.bookName != null">
+				book_name like CONCAT(CONCAT('%',#{book.bookName},'%')) 
+				or author like CONCAT(CONCAT('%',#{book.bookName},'%'))
 			</if>
 		</where>
+		limit #{index},5
 	</select>
 
 	<select id="selectByPage" resultType="com.ibm6.bean.Book">

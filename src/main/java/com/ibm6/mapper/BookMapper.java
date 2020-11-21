@@ -15,7 +15,7 @@ import com.ibm6.model.BookType;
 public interface BookMapper {
 	public List<Book> selectByCondition(@Param("book")Book book,@Param("index") Integer index);
 	public Book getById(Book book);
-	public List<Book> selectByKeyword(Book book);  //统一传给书名
+	public List<Book> selectByKeyword(@Param("book")Book book,@Param("index")Integer index);  //统一传给书名
 	public List<Book> selectByPage(Integer index);  //统一传给书名
 	public int updateById(Book book);
 	public List<User> selectById(int index);

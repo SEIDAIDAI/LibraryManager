@@ -39,7 +39,10 @@ public class BookController {
 	}
 	
 	@PostMapping("/BookType/{userId}/{index}")
-	public List<BookStatus> BookSearchType(@RequestBody Book args,@PathVariable("index") Integer index,@PathVariable("userId") Integer userId)
+	public List<BookStatus> BookSearchType(
+			@RequestBody Book args,
+			@PathVariable("index") Integer index,
+			@PathVariable("userId") Integer userId)
 	{
 		List<Book> books = bookService.bookSearchByType(args,index*5);
 		List<Integer> mybooks=new ArrayList<Integer>();
@@ -72,13 +75,13 @@ public class BookController {
 		return re;
 	}
 	
-	@PostMapping("/BookKeyWord")
-	public List<Book> BookSearchKeyword(@RequestBody Book book)
-	{
-		System.out.println(book.getBookId());
-		System.out.println(book);
-		List<Book> re = bookService.bookSearchByKeyword(book);
-		return re;
+	@PostMapping("/BookKeyWord/{userId}/{index}")
+	public List<BookStatus> BookSearchKeyword(
+			@RequestBody Book book,
+			@PathVariable("index") Integer index,
+			@PathVariable("userId") Integer userId){
+		List<Book> books = bookService.bookSearchByKeyword(book,index);
+		return addMyStatus(books, userId);
 	}
 	
 	@GetMapping("/BookByPage/{index}")
@@ -173,4 +176,26 @@ public class BookController {
 //		
 //		return null;
 //	}
+	 private List<BookStatus> addMyStatus(List<Book> books,Integer userId){
+		 List<Integer> mybooks=new ArrayList<Integer>();
+			List<BorrowList> borrowList = borrowService.getBorrowList(userId);
+			for(BorrowList bl:borrowList) {
+				mybooks.add(bl.getBookId());
+			}
+			List<BookStatus> bookStatuses=new ArrayList<BookStatus>();
+			for(Book bs:books) {
+				BookStatus temp=new BookStatus();
+				for(Integer i:mybooks) {
+					if (i==bs.getBookId()) {
+						temp.setStatus(1);
+						break;
+					}else {
+						temp.setStatus(0);
+					}
+				}
+				temp.setBook(bs);
+				bookStatuses.add(temp);
+			}
+			return bookStatuses;
+	 }
 }

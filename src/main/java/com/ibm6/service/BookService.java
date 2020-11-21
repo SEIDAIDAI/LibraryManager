@@ -40,9 +40,9 @@ public class BookService {
 	}
 	
 	//关键字查询  书名和作者
-	public List<Book> bookSearchByKeyword(Book book)
+	public List<Book> bookSearchByKeyword(Book book,Integer index)
 	{
-		List<Book> bookList = bookMapper.selectByKeyword(book);
+		List<Book> bookList = bookMapper.selectByKeyword(book,index);
 
 		return bookList;
 	}
