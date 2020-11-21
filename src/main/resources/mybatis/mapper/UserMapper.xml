@@ -97,7 +97,7 @@
 	</update>
 	
 	<select id="findUserByPage" resultType="com.ibm6.bean.User">
-		select * from user limit #{index},9
+		select * from user limit #{index},5
 	</select>
 
 	<select id="findUserByExample" resultType="com.ibm6.bean.User">
@@ -105,7 +105,7 @@
 			<if test="user.name!=null and user.name!=''">
 				and name like CONCAT(CONCAT('%',#{user.name},'%'))
 			</if>
-		limit #{index},9
+		limit #{index},5
 	</select>
 </mapper>
 

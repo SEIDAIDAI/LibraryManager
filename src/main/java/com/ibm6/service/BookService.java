@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.util.DefaultPrettyPrinter.Indenter;
 import com.ibm6.bean.Book;
 import com.ibm6.mapper.BookMapper;
 import com.ibm6.model.BookLength;
@@ -31,6 +30,12 @@ public class BookService {
 		List<Book> bookList = bookMapper.selectByCondition(book,index);
 		
 		return bookList;
+	}
+	
+	public int bookTotalByType(Book book)
+	{
+		int re = bookMapper.getBookTotalByType(book);
+		return re;
 	}
 	
 	//书详情

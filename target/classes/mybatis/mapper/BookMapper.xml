@@ -49,6 +49,24 @@
 			</if>
 			limit #{index},5
 	</select>
+	
+
+	<select id="getBookTotalByType" resultType="int">
+		select count(*) 
+		from Book where 1=1 
+			<if test="nation != null">
+				and nation=#{nation}
+			</if>
+			<if test="type != null">
+				and type=#{type}
+			</if>
+			<if test="length != null">
+				and length=#{length}
+			</if>
+			<if test="theme != null">
+				and theme=#{theme}
+			</if>
+	</select>
 
 	<select id="getById" resultType="com.ibm6.bean.Book">
 		select 

@@ -3,7 +3,6 @@ package com.ibm6.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
-import org.junit.jupiter.params.ParameterizedTest;
 
 import com.ibm6.bean.Book;
 import com.ibm6.bean.User;
@@ -24,8 +23,7 @@ public interface BookMapper {
 	public int getCount();
 	public List<BookNation> selectAllNation();
 	public List<BookType> selectAllType();
-	
 	public List<BookTheme> selectAllTheme(int bookType);
-	
 	public List<BookLength> selectAllLength();
+	public int getBookTotalByType(Book book);
 }
