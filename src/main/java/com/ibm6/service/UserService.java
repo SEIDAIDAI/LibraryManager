@@ -27,4 +27,12 @@ public class UserService {
 	public List<User> findAll(){
 		return userMapper.findAll();
 	}
+	
+	public List<User> findUserByPage(Integer index){
+		return userMapper.findUserByPage(index);
+	}
+	
+	public List<User> findUserByExample(User user,Integer index) {
+		return userMapper.findUserByExample(user,index);
+	}
 }

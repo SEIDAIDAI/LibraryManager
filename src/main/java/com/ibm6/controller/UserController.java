@@ -48,22 +48,19 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping("testUserUpdate")
+	@RequestMapping("/testUserUpdate")
 	public User testUserUpdate(@RequestBody User user) {
 		return userService.showUser(user.getUserId());
 	}
 	
-	@RequestMapping("/showUserList")
-	public List<User> showUserList(){
-//		List<User> users=userService.findAll();
-//		for(User user:users) {
-//			System.out.println(user.getUserId());
-//			if (user.getUserId()<1000) {
-//				users.remove(user);
-//			}
-//		}
-		return userService.findAll();
-		
+	@RequestMapping("/showUserList/{index}")
+	public List<User> showUserList(@PathVariable("index") Integer index){
+		return userService.findUserByPage(index * 9);
 	}
 	
+	@RequestMapping("/findUserByExample/{index}")
+	public List<User> findUserByExample(@RequestBody User user,@PathVariable("index") Integer index){
+		System.out.println(index);
+		return userService.findUserByExample(user,index*9);
+	}
 }

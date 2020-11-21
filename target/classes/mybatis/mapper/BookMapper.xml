@@ -35,18 +35,19 @@
 		author,
 		summary 
 		from Book where 1=1 
-			<if test="nation != null">
-				and nation=#{nation}
+			<if test="book.nation != null">
+				and nation=#{book.nation}
 			</if>
-			<if test="type != null">
-				and type=#{type}
+			<if test="book.type != null">
+				and type=#{book.type}
 			</if>
-			<if test="length != null">
-				and length=#{length}
+			<if test="book.length != null">
+				and length=#{book.length}
 			</if>
-			<if test="theme != null">
-				and theme=#{theme}
+			<if test="book.theme != null">
+				and theme=#{book.theme}
 			</if>
+			limit #{index},5
 	</select>
 
 	<select id="getById" resultType="com.ibm6.bean.Book">
@@ -88,7 +89,8 @@
 		from Book
 		<where>
 			<if test="bookName != null">
-				book_name=#{bookName} or author=#{bookName}
+				book_name like CONCAT(CONCAT('%',#{bookName},'%')) 
+				or author like CONCAT(CONCAT('%',#{bookName},'%'))
 			</if>
 		</where>
 	</select>

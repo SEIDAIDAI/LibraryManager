@@ -3,6 +3,7 @@ package com.ibm6.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.ibm6.bean.User;
 
@@ -15,4 +16,6 @@ public interface UserMapper {
 	public User findById(int id);
 	public int updateById(User user);
 	public int updateByIdSelective(User user);
+	public List<User> findUserByPage(Integer index);
+	public List<User> findUserByExample(@Param("user")User user,@Param("index")Integer index);
 }
