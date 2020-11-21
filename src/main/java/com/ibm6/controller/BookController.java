@@ -38,11 +38,30 @@ public class BookController {
 		return re;
 	}
 	
-	@PostMapping("/BookType")
-	public List<Book> BookSearchType(@RequestBody Book args)
+	@PostMapping("/BookType/{userId}/{index}")
+	public List<BookStatus> BookSearchType(@RequestBody Book args,@PathVariable("index") Integer index,@PathVariable("userId") Integer userId)
 	{
-		List<Book> re = bookService.bookSearchByType(args);
-		return re;
+		List<Book> books = bookService.bookSearchByType(args,index*5);
+		List<Integer> mybooks=new ArrayList<Integer>();
+		List<BorrowList> borrowList = borrowService.getBorrowList(userId);
+		for(BorrowList bl:borrowList) {
+			mybooks.add(bl.getBookId());
+		}
+		List<BookStatus> bookStatuses=new ArrayList<BookStatus>();
+		for(Book bs:books) {
+			BookStatus temp=new BookStatus();
+			for(Integer i:mybooks) {
+				if (i==bs.getBookId()) {
+					temp.setStatus(1);
+					break;
+				}else {
+					temp.setStatus(0);
+				}
+			}
+			temp.setBook(bs);
+			bookStatuses.add(temp);
+		}
+		return bookStatuses;
 	}
 	
 	@PostMapping("/BookInfo")
@@ -148,4 +167,10 @@ public class BookController {
 	
 	
 //	@RequestMapping("/findByAu")
+//	@RequestMapping("/findBookByFourCondition/{index}")
+//	public List<BookStatus> findBookByFourCondition(@RequestBody Book book,@PathVariable Integer index){
+//		bookService.bookSearchByType(book);
+//		
+//		return null;
+//	}
 }

@@ -95,9 +95,18 @@
 		</set>
 		where user_id = #{userId}
 	</update>
+	
+	<select id="findUserByPage" resultType="com.ibm6.bean.User">
+		select * from user limit #{index},9
+	</select>
 
-
-
+	<select id="findUserByExample" resultType="com.ibm6.bean.User">
+		select * from user where 1=1
+			<if test="user.name!=null and user.name!=''">
+				and name like CONCAT(CONCAT('%',#{user.name},'%'))
+			</if>
+		limit #{index},9
+	</select>
 </mapper>
 
 
