@@ -71,10 +71,10 @@
 		values(#{userId}, #{bookId}, #{borrowTime}, #{retTime}, #{validTime})
 	</insert>
 	
-	<update id="updateBorrowFlag">
+	<update id="updateBorrowFlagAndTime">
 		update borrow
-		set ret_flag = 1
-		where user_id = #{userId}
+		set ret_flag = 1, ret_time = #{retTime}
+		where user_id = #{userId} and book_id = #{bookId}
 	</update>
 	
 	<update id="updateBookUploadInc">
@@ -93,13 +93,57 @@
 		select
 		borrow.book_id
 		from borrow
-		where borrow.user_id = #{userId} and borrow.book_id = #{bookId}
+		where borrow.user_id = #{userId} and borrow.book_id = #{bookId} and ret_flag = 0
+	</select>
+	
+	
+	<select id="getBookHasBorrowed" resultType="String">
+		select
+		borrow.book_id
+		from borrow
+		where borrow.user_id = #{userId} and ret_flag = 0
 	</select>
 	
 	<select id="getBookLeftAmount" resultType="com.ibm6.bean.Book">
 		select * 
 		from book
 		where book_id = #{bookId};
+	</select>
+	
+	<select id="getDayBorrowTotal" resultType="int">
+		select count(*)
+		from borrow
+		where borrow_time > #{today} and ret_flag = 0
+	</select>
+	
+	<select id="getDayRetTotal" resultType="int">
+		select count(*)
+		from borrow
+		where ret_time > #{today} and ret_flag = 1
+	</select>
+	
+	<select id="getMonthBorrowTotal" resultType="int">
+		select count(*)
+		from borrow
+		where borrow_time between #{start} and #{today}
+	</select>
+	
+	<select id="getMonthRetTotal" resultType="int">
+		select count(*)
+		from borrow
+		where ret_time between #{start} and #{today} and ret_flag = 1
+	</select>
+	
+	<select id="getYearBorrowTotal" resultType="int">
+		select count(*)
+		from borrow
+		where borrow_time between #{start} and #{today}
+	</select>
+	
+	<select id="getYearRetTotal" resultType="int">
+		select count(*)
+		from borrow
+		where ret_time between #{start} and #{today} and ret_flag = 1
 	</select>
 </mapper>
 

@@ -56,6 +56,5 @@ public class ManagerController {
 		}
 		
 		return "0";
-		
 	}
 }

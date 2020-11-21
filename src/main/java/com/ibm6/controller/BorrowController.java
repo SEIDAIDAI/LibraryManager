@@ -95,7 +95,8 @@ public class BorrowController {
 	 * int userId; 
 	 * int bookId; 
 	 */
-	//返回结果 int  1表示借阅成功     0表示借阅失败    2 表示这本书用户已借阅    3没有库存
+	//返回结果 int  1表示借阅成功     0表示借阅失败     2 表示这本书用户已借阅     3表示用户已借阅了3本书，不能再借阅，   4没有库存
+	//并发控制 -----------------------多人借书
 	@PostMapping("/borrowBook")
 	public int BorrowBook(@RequestBody Borrow borrow)
 	{
@@ -106,15 +107,63 @@ public class BorrowController {
 
 	//功能: 用户借阅书籍归还
 	//输入参数:  userId  bookId
-	//输出参数: int  1表示成功  0表示成功
+	//输出参数: int  1表示成功     0表示成功    2表示用户并没有借阅这本书
+	//并发控制---------------------------多人还书
 	@PostMapping("/borrowReturn")
 	public int BorrowReturn(@RequestBody Borrow borrow)
 	{
 		//需要修改用户的借阅记录  ret_flag修改为 0 
 		//需要修改书籍的数量 left_amount 增加 1
+		
+		//先检查记录是否存在
+		//存在才进行删除
 		int re = service.borrowReturn(borrow);
 		return re;
 	}
 	
-	//统计功能  年月日  	
+	//统计功能  年月日  
+	@GetMapping("/borrowDay")
+	public int BorrowDayTotal()
+	{
+		int re = service.borrowDayTotal();
+		return re;
+	}
+	
+	//统计功能  年月日  
+	@GetMapping("/borrowRetDay")
+	public int BorrowDayRetTotal()
+	{
+		int re = service.borrowDayRetBorrowTotal();
+		return re;
+	}
+	
+	@GetMapping("/borrowMonth")
+	public int BorrowMonthTotal()
+	{
+		int re = service.borrowMonthTotal();
+		return re;
+	}
+	
+	@GetMapping("/borrowRetMonth")
+	public int BorrowMonthRetTotal()
+	{
+		int re = service.borrowMonthRetTotal();
+		return re;
+	}
+	
+	
+	@GetMapping("/borrowYear")
+	public int BorrowYearTotal()
+	{
+		int re = service.borrowYearTotal();
+		return re;
+	}
+	
+	
+	@GetMapping("/borrowRetYear")
+	public int BorrowYearRetTotal()
+	{
+		int re = service.borrowYearRetTotal();
+		return re;
+	}
 }
