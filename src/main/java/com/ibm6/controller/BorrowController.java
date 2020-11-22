@@ -122,6 +122,9 @@ public class BorrowController {
 	}
 	
 	//统计功能  年月日  
+	//功能: 当日借出量
+	//输入参数: 无
+	//返回参数: int
 	@GetMapping("/borrowDay")
 	public int BorrowDayTotal()
 	{
@@ -129,7 +132,9 @@ public class BorrowController {
 		return re;
 	}
 	
-	//统计功能  年月日  
+	//功能: 当日归还量
+	//输入参数: 无
+	//返回参数: int
 	@GetMapping("/borrowRetDay")
 	public int BorrowDayRetTotal()
 	{
@@ -137,6 +142,9 @@ public class BorrowController {
 		return re;
 	}
 	
+	//功能: 当月借出量
+	//输入参数: 无
+	//返回参数: int
 	@GetMapping("/borrowMonth")
 	public int BorrowMonthTotal()
 	{
@@ -144,6 +152,9 @@ public class BorrowController {
 		return re;
 	}
 	
+	//功能: 当月归还量
+	//输入参数: 无
+	//返回参数: int
 	@GetMapping("/borrowRetMonth")
 	public int BorrowMonthRetTotal()
 	{
@@ -151,7 +162,9 @@ public class BorrowController {
 		return re;
 	}
 	
-	
+	//功能: 当年借出量
+	//输入参数: 无
+	//返回参数: int
 	@GetMapping("/borrowYear")
 	public int BorrowYearTotal()
 	{
@@ -159,7 +172,9 @@ public class BorrowController {
 		return re;
 	}
 	
-	
+	//功能: 当年归还量
+	//输入参数: 无
+	//返回参数: int
 	@GetMapping("/borrowRetYear")
 	public int BorrowYearRetTotal()
 	{
