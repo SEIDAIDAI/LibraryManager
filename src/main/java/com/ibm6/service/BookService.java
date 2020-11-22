@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.util.DefaultPrettyPrinter.Indenter;
 import com.ibm6.bean.Book;
 import com.ibm6.mapper.BookMapper;
 import com.ibm6.model.BookLength;
@@ -33,6 +32,12 @@ public class BookService {
 		return bookList;
 	}
 	
+	public int bookTotalByType(Book book)
+	{
+		int re = bookMapper.getBookTotalByType(book);
+		return re;
+	}
+	
 	//书详情
 	public Book showBookInfo(Book book) {
 		Book re = bookMapper.getById(book);
@@ -40,9 +45,9 @@ public class BookService {
 	}
 	
 	//关键字查询  书名和作者
-	public List<Book> bookSearchByKeyword(Book book)
+	public List<Book> bookSearchByKeyword(Book book,Integer index)
 	{
-		List<Book> bookList = bookMapper.selectByKeyword(book);
+		List<Book> bookList = bookMapper.selectByKeyword(book,index);
 
 		return bookList;
 	}

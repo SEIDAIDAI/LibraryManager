@@ -49,6 +49,24 @@
 			</if>
 			limit #{index},5
 	</select>
+	
+
+	<select id="getBookTotalByType" resultType="int">
+		select count(*) 
+		from Book where 1=1 
+			<if test="nation != null">
+				and nation=#{nation}
+			</if>
+			<if test="type != null">
+				and type=#{type}
+			</if>
+			<if test="length != null">
+				and length=#{length}
+			</if>
+			<if test="theme != null">
+				and theme=#{theme}
+			</if>
+	</select>
 
 	<select id="getById" resultType="com.ibm6.bean.Book">
 		select 
@@ -88,11 +106,12 @@
 		summary 
 		from Book
 		<where>
-			<if test="bookName != null">
-				book_name like CONCAT(CONCAT('%',#{bookName},'%')) 
-				or author like CONCAT(CONCAT('%',#{bookName},'%'))
+			<if test="book.bookName != null">
+				book_name like CONCAT(CONCAT('%',#{book.bookName},'%')) 
+				or author like CONCAT(CONCAT('%',#{book.bookName},'%'))
 			</if>
 		</where>
+		limit #{index},5
 	</select>
 
 	<select id="selectByPage" resultType="com.ibm6.bean.Book">
