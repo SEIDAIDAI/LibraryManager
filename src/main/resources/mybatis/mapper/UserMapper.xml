@@ -27,6 +27,10 @@
 		user_id = #{id}
 	</delete>
 
+	<select id="getTotalUserCount" resultType="int">
+		select count(*) from user;
+	</select>
+	
 	<select id="findAll" resultType="com.ibm6.bean.User">
 		select * from user
 	</select>
@@ -100,6 +104,13 @@
 		select * from user limit #{index},5
 	</select>
 
+	<select id="findUserCountByExample" resultType="int">
+		select count(*) from user where 1=1
+		<if test="user.name!=null and user.name!=''">
+			and name like CONCAT(CONCAT('%',#{user.name},'%'))
+		</if>
+	</select>
+	
 	<select id="findUserByExample" resultType="com.ibm6.bean.User">
 		select * from user where 1=1
 			<if test="user.name!=null and user.name!=''">

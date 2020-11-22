@@ -52,6 +52,12 @@ public class BookService {
 		return bookList;
 	}
 	
+	public int BookTotalByKeyword(Book book)
+	{
+		int re = bookMapper.getBookTotalByKeyword(book);
+		return re;
+	}
+	
 	//分页查询
 	public List<Book> bookSearchByPage(Integer index)
 	{

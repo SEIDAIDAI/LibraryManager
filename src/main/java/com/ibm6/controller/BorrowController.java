@@ -38,9 +38,24 @@ public class BorrowController {
 		return borrow;
 	}
 
+	// 功能: 用户书架  查询用户借阅
+	// 输入参数 : userId
+	// 返回结果: 
+	/*
+	 * String bookName; 
+	 * Date borrowTime; 
+	 * Date retTime;
+	 * int validTime;
+	 */
 	@GetMapping("/borrowList/{userId}")
 	public List<BorrowList> borrowBookInfo(@PathVariable("userId") int userId) {
 		List<BorrowList> borrow = service.getBorrowList(userId);
+		return borrow;
+	}
+	
+	@GetMapping("/borrowUserShelf/{userId}")
+	public List<BorrowBookInfo> borrowBookShelf(@PathVariable("userId") int userId) {
+		List<BorrowBookInfo> borrow = service.getBorrowShelf(userId);
 		return borrow;
 	}
 

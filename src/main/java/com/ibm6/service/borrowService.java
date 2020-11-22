@@ -28,6 +28,12 @@ public class borrowService {
 		return re;
 	}
 	
+	public List<BorrowBookInfo> getBorrowShelf(int userId)
+	{
+		List<BorrowBookInfo> re = mapper.selectBorrowByUserIdAndFlag(userId);
+		return re;
+	}
+	
 	public List<BorrowList> getBorrowList(int userId)
 	{
 		List<BorrowList> re = mapper.selectBorrowByUserId(userId);
