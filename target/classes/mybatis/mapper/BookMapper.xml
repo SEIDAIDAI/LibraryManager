@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper标签要指定namespace属性，不然会报错，可看做包名 -->
+
+<mapper namespace="com.ibm6.mapper.BookMapper">
+	<resultMap type="com.ibm6.bean.Book" id="bookResultMap">
+		<result property="bookId" column="book_id" />
+		<result property="storeDate" column="store_date" />
+		<result property="leftAmount" column="left_amount" />
+		<result property="uploadAmount" column="upload_amount" />
+		<result property="downloadAmount" column="download_amount" />
+	</resultMap>
+	
+	<select id="getCount" resultType="int">
+		select 	count(*) from book
+	</select>
+	
+	<select id="selectAllNation" resultType="com.ibm6.model.BookNation">
+		select * from nation order by CONVERT(nation USING GBK)
+	</select>
+
+	<select id="selectByCondition" resultType="com.ibm6.bean.Book">
+		select 
+		book_id,	
+		book_name, 
+		nation, 
+		type,
+		length,
+		theme,
+		store_date,
+		left_amount,
+		upload_amount,
+		download_amount,
+		author,
+		summary 
+		from Book where 1=1 
+			<if test="book.bookName != null">
+				and (book_name like '%${book.bookName}%' or author like '%${book.bookName}%')  
+			</if>
+			<if test="book.nation != null">
+				and nation=#{book.nation}
+			</if>
+			<if test="book.type != null">
+				and type=#{book.type}
+			</if>
+			<if test="book.length != null">
+				and length=#{book.length}
+			</if>
+			<if test="book.theme != null">
+				and theme=#{book.theme}
+			</if>
+			limit #{index},5
+	</select>
+	
+
+	<select id="getBookTotalByType" resultType="int">
+		select count(*) 
+		from Book where 1=1 
+			<if test="bookName != null">
+				and (book_name like '%${bookName}%' or author like '%${bookName}%')  
+			</if>
+			<if test="nation != null">
+				and nation=#{nation}
+			</if>
+			<if test="type != null">
+				and type=#{type}
+			</if>
+			<if test="length != null">
+				and length=#{length}
+			</if>
+			<if test="theme != null">
+				and theme=#{theme}
+			</if>
+	</select>
+
+	<select id="getById" resultType="com.ibm6.bean.Book">
+		select 
+		book_id,	
+		book_name, 
+		nation, 
+		type,
+		length,
+		theme,
+		store_date,
+		left_amount,
+		upload_amount,
+		download_amount,
+		author,
+		summary
+		from Book
+		<where>
+			<if test="bookId != null">
+				book_id=#{bookId}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectByKeyword" resultType="com.ibm6.bean.Book">
+		select 
+		book_id,	
+		book_name, 
+		nation, 
+		type,
+		length,
+		theme,
+		store_date,
+		left_amount,
+		upload_amount,
+		download_amount,
+		author,
+		summary 
+		from Book
+		<where>
+			<if test="book.bookName != null">
+				book_name like CONCAT(CONCAT('%',#{book.bookName},'%')) 
+				or author like CONCAT(CONCAT('%',#{book.bookName},'%'))
+			</if>
+		</where>
+		limit #{index},5
+	</select>
+	
+	<select id="getBookTotalByKeyword" resultType="int">
+		select count(*)
+		from Book
+		<where>
+			<if test="bookName != null">
+				book_name like '%${bookName}%'
+				or author like '%${bookName}%'
+			</if>
+		</where>
+	</select>
+
+	<select id="selectByPage" resultType="com.ibm6.bean.Book">
+		select 
+		book_id,	
+		book_name, 
+		nation, 
+		type,
+		length,
+		theme,
+		store_date,
+		left_amount,
+		upload_amount,
+		download_amount,
+		author,
+		summary 
+		from Book limit
+		#{index}, 5
+	</select>
+
+	<update id="updateById">
+		update book
+		set book_name = #{bookName},
+		nation = #{nation},
+		type = #{type},
+		length = #{length},
+		theme = #{theme},
+		store_date = #{storeDate},
+		left_amount = #{leftAmount},
+		upload_amount = #{uploadAmount},
+		download_amount = #{downloadAmount}
+		where book_id = #{bookId}
+	</update>
+
+	<insert id="saveNewBook">
+		insert into book(
+		book_name, 
+		nation, 
+		type,
+		length,
+		theme,
+		store_date,
+		left_amount,
+		upload_amount,
+		download_amount,
+		author,
+		summary
+		)
+		values(
+		#{bookName},
+		#{nation},
+		#{type},
+		#{length},
+		#{theme},
+		#{storeDate},
+		#{leftAmount},
+		#{uploadAmount},
+		#{downloadAmount},
+		#{author},
+		#{summary}
+		)
+	</insert>
+
+	<update id="deleteById">
+		update book
+		set download_amount = download_amount + left_amount, left_amount = 0
+		where book_id = #{bookId}
+	</update>
+	
+	<select id="selectAllType" resultType="com.ibm6.model.BookType">
+		select * from type order by CONVERT(type USING GBK)
+	</select>
+	
+	<select id="selectAllTheme" resultType="com.ibm6.model.BookTheme">
+		select * from theme where type_id=#{bookType} order by CONVERT(theme USING GBK)
+	</select>
+	
+	<select id="selectAllLength" resultType="com.ibm6.model.BookLength">
+		select * from length order by CONVERT(length USING GBK)
+	</select>
+</mapper>
+
+
+
