@@ -45,6 +45,11 @@ public class BorrowList {
 	public void setId(int id) {
 		this.id = id;
 	}
+	@Override
+	public String toString() {
+		return "BorrowList [id=" + id + ", author=" + author + ", bookId=" + bookId + ", bookName=" + bookName
+				+ ", summary=" + summary + ", retTime=" + retTime + "]";
+	}
 	
 	
 	

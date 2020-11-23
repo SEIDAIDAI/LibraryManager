@@ -52,6 +52,12 @@ public class BookService {
 		return bookList;
 	}
 	
+	public int BookTotalByKeyword(Book book)
+	{
+		int re = bookMapper.getBookTotalByKeyword(book);
+		return re;
+	}
+	
 	//分页查询
 	public List<Book> bookSearchByPage(Integer index)
 	{
@@ -69,6 +75,7 @@ public class BookService {
 	//新增书籍
 	public int bookInsert(Book book)
 	{
+		System.out.println(book);
 		int re = bookMapper.saveNewBook(book);
 		return re;
 	}
@@ -77,7 +84,7 @@ public class BookService {
 	public int bookDelete(Book book)
 	{
 		//如果书有出借的
-		//把书进行下架 同时把简介设为 书已下架  其他不变  查询依然能显示出来
+		//把书进行下架 同时把简介设为 书已下架  其他不变  查询依然能显示出来,,,,,,
 		int re = bookMapper.deleteById(book);
 		return re;
 	}
@@ -85,7 +92,6 @@ public class BookService {
 	public List<BookNation> bookNations()
 	{
 		List<BookNation> bookList = bookMapper.selectAllNation();
-
 		return bookList;
 	}
 	

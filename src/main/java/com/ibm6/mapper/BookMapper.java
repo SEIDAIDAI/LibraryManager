@@ -26,4 +26,5 @@ public interface BookMapper {
 	public List<BookTheme> selectAllTheme(int bookType);
 	public List<BookLength> selectAllLength();
 	public int getBookTotalByType(Book book);
+	public int getBookTotalByKeyword(Book book);
 }

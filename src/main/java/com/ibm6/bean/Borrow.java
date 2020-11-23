@@ -53,5 +53,10 @@ public class Borrow {
 	public void setValidTime(int validTime) {
 		this.validTime = validTime;
 	}
+	@Override
+	public String toString() {
+		return "Borrow [id=" + id + ", userId=" + userId + ", bookId=" + bookId + ", borrowTime=" + borrowTime
+				+ ", retTime=" + retTime + ", retFlag=" + retFlag + ", validTime=" + validTime + "]";
+	}
 	
 }

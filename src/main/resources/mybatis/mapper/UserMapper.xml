@@ -7,12 +7,7 @@
 	<resultMap type="com.ibm6.bean.User" id="userResultMap">
 		<result property="userId" column="user_id" />
 	</resultMap>
-	<!-- <select id="queryBySchoolTitle" parameterType="Linda.mybatis.Education" 
-		resultType="Linda.mybatis.Education"> select * from education where school_title 
-		= #{school_title} </select> <select id="queryById" resultType="Linda.mybatis.Education" 
-		resultMap="queryResultMap"> select * from education where id=#{id} </select> 
-		<select id="queryAll" resultType="Linda.mybatis.Education" resultMap="queryResultMap"> 
-		select * from education </select> -->
+
 	<insert id="insert" parameterType="com.ibm6.bean.User">
 		insert into user(user_id,
 		name, gender, age, email, birthday, phone,
@@ -27,6 +22,10 @@
 		user_id = #{id}
 	</delete>
 
+	<select id="getTotalUserCount" resultType="int">
+		select count(*) from user where user_id > 1000;
+	</select>
+	
 	<select id="findAll" resultType="com.ibm6.bean.User">
 		select * from user
 	</select>
@@ -100,6 +99,13 @@
 		select * from user limit #{index},5
 	</select>
 
+	<select id="findUserCountByExample" resultType="int">
+		select count(*) from user where 1=1
+		<if test="name!=null and name!=''">
+			and name like CONCAT(CONCAT('%',#{name},'%'))
+		</if>
+	</select>
+	
 	<select id="findUserByExample" resultType="com.ibm6.bean.User">
 		select * from user where 1=1
 			<if test="user.name!=null and user.name!=''">

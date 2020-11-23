@@ -18,7 +18,11 @@ public class UserService {
 		return userMapper.updateByIdSelective(user);
 	}
 	
-	
+	public int totalUserCount()
+	{
+		int re = userMapper.getTotalUserCount();
+		return re;
+	}
 	public User showUser(int userId) {
 		return userMapper.findById(userId);
 	}
@@ -30,6 +34,11 @@ public class UserService {
 	
 	public List<User> findUserByPage(Integer index){
 		return userMapper.findUserByPage(index);
+	}
+	
+	public int userByExampleCount(User user)
+	{
+		return userMapper.findUserCountByExample(user);
 	}
 	
 	public List<User> findUserByExample(User user,Integer index) {
