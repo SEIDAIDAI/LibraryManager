@@ -23,17 +23,34 @@
 		where borrow.book_id = book.book_id
 		and borrow.id = #{id};
 	</select>
+	
+	
+	<select id="selectBorrowByUserIdAndFlag" resultType="com.ibm6.model.BorrowBookInfo">
+		select
+		borrow.id,
+		book.book_id,
+		book.book_name,
+		book.nation,
+		book.type,
+		book.theme,
+		book.length,
+		borrow.borrow_time
+		from borrow, book
+		where borrow.book_id = book.book_id and borrow.user_id = #{userId} and ret_flag = 0
+	</select>
+	
+	<select id="selectUserBorrowTotal" resultType="int">
+		select
+		count(*)
+		from borrow
+		where  borrow.user_id = #{userId};
+	</select>
 
 	<select id="selectBorrowByUserId" resultType="com.ibm6.model.BorrowList">
 		select
-		book.book_name,
-		book.author,
-		book.summary,
-		borrow.id,
-		borrow.book_id,
-		borrow.ret_time
-		from borrow, book
-		where borrow.book_id = book.book_id and borrow.user_id = #{userId};
+		*
+		from borrow
+		where  borrow.user_id = #{userId} and borrow.ret_flag=0;
 	</select>
 
 	<select id="getDetailByLikeSearch" resultType="com.ibm6.model.BorrowBookInfo">
@@ -74,7 +91,7 @@
 	<update id="updateBorrowFlagAndTime">
 		update borrow
 		set ret_flag = 1, ret_time = #{retTime}
-		where user_id = #{userId} and book_id = #{bookId}
+		where id=#{id}
 	</update>
 	
 	<update id="updateBookUploadInc">

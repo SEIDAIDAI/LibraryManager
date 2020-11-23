@@ -29,6 +29,12 @@ public class borrowService {
 		return re;
 	}
 	
+	public List<BorrowBookInfo> getBorrowShelf(int userId)
+	{
+		List<BorrowBookInfo> re = mapper.selectBorrowByUserIdAndFlag(userId);
+		return re;
+	}
+	
 	public List<BorrowList> getBorrowList(int userId)
 	{
 		List<BorrowList> re = mapper.selectBorrowByUserId(userId);
@@ -42,8 +48,8 @@ public class borrowService {
 
 	public int getBorrowTotal(int userId)
 	{
-		List<BorrowList> re = mapper.selectBorrowByUserId(userId);
-		return re.size();
+		int re = mapper.selectUserBorrowTotal(userId);
+		return re;
 	}
 	
 	public List<BorrowBookInfo> getBorrowByPage(BorrowByPage borrowByPage)

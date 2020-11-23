@@ -19,13 +19,17 @@ public class AnnouncementController {
 	@Autowired
 	private AnnouncementService service;
 	
-	//	分页查询
+	//功能： 分页查询公告
+	//输入参数: index 页号
+	//输出参数: List<Announcement>
 	@GetMapping("/selectPage/{index}")
 	public List<Announcement> selectAllAnnouncement(@PathVariable("index") int index) {
 		return service.selectAll(index*5);
 	}
 	
-	//  按公告表的ID查询单条公告
+	//功能：  按公告表的ID查询单条公告
+	//输入参数:  id
+	//输出参数: Announcement
 	@PostMapping("/getById")
 	public Announcement getAnnouncementById(@RequestBody Announcement ann){
 	
@@ -38,19 +42,25 @@ public class AnnouncementController {
 //		return ann;
 //	}
 	
-	//  更新公告表中的信息
+	//功能：  更新公告表中的信息
+	//输入参数: Announcement
+	//输出参数: int
 	@PostMapping("/updateAnnouncement")
 	public int updateAnnouncementById(@RequestBody Announcement ann) {
 		return service.updateById(ann);
 	}
 	
-	//  按公告表的ID删除公告信息
+	//功能：  按公告表的ID删除公告信息
+	//输入参数: id
+	//输出参数: int
 	@GetMapping("/deleteAnnouncement/{id}")
 	public int deleteAnnouncement(@PathVariable("id") Integer id) {
 		return service.deleteById(id);
 	}
 	
-	//  增加一条公告
+	//功能：  增加一条公告
+	//输入参数: Announcement
+	//输出参数: int
 	@PostMapping("/addAnnouncement")
 	public int addAnnouncement(@RequestBody Announcement ann) {
 		int re=service.announcementInsert(ann);

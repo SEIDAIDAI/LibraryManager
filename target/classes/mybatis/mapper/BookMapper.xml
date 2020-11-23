@@ -17,7 +17,7 @@
 	</select>
 	
 	<select id="selectAllNation" resultType="com.ibm6.model.BookNation">
-		select * from nation
+		select * from nation order by CONVERT(nation USING GBK)
 	</select>
 
 	<select id="selectByCondition" resultType="com.ibm6.bean.Book">
@@ -35,6 +35,9 @@
 		author,
 		summary 
 		from Book where 1=1 
+			<if test="book.bookName != null">
+				and (book_name like '%${book.bookName}%' or author like '%${book.bookName}%')  
+			</if>
 			<if test="book.nation != null">
 				and nation=#{book.nation}
 			</if>
@@ -54,6 +57,9 @@
 	<select id="getBookTotalByType" resultType="int">
 		select count(*) 
 		from Book where 1=1 
+			<if test="bookName != null">
+				and (book_name like '%${bookName}%' or author like '%${bookName}%')  
+			</if>
 			<if test="nation != null">
 				and nation=#{nation}
 			</if>
@@ -112,6 +118,17 @@
 			</if>
 		</where>
 		limit #{index},5
+	</select>
+	
+	<select id="getBookTotalByKeyword" resultType="int">
+		select count(*)
+		from Book
+		<where>
+			<if test="bookName != null">
+				book_name like '%${bookName}%'
+				or author like '%${bookName}%'
+			</if>
+		</where>
 	</select>
 
 	<select id="selectByPage" resultType="com.ibm6.bean.Book">
@@ -181,15 +198,15 @@
 	</delete>
 	
 	<select id="selectAllType" resultType="com.ibm6.model.BookType">
-		select * from type
+		select * from type order by CONVERT(type USING GBK)
 	</select>
 	
 	<select id="selectAllTheme" resultType="com.ibm6.model.BookTheme">
-		select * from theme where type_id=#{bookType}
+		select * from theme where type_id=#{bookType} order by CONVERT(theme USING GBK)
 	</select>
 	
 	<select id="selectAllLength" resultType="com.ibm6.model.BookLength">
-		select * from length
+		select * from length order by CONVERT(length USING GBK)
 	</select>
 </mapper>
 

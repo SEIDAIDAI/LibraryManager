@@ -38,9 +38,24 @@ public class BorrowController {
 		return borrow;
 	}
 
+	// 功能: 用户书架  查询用户借阅
+	// 输入参数 : userId
+	// 返回结果: 
+	/*
+	 * String bookName; 
+	 * Date borrowTime; 
+	 * Date retTime;
+	 * int validTime;
+	 */
 	@GetMapping("/borrowList/{userId}")
 	public List<BorrowList> borrowBookInfo(@PathVariable("userId") int userId) {
 		List<BorrowList> borrow = service.getBorrowList(userId);
+		return borrow;
+	}
+	
+	@GetMapping("/borrowUserShelf/{userId}")
+	public List<BorrowBookInfo> borrowBookShelf(@PathVariable("userId") int userId) {
+		List<BorrowBookInfo> borrow = service.getBorrowShelf(userId);
 		return borrow;
 	}
 
@@ -106,8 +121,8 @@ public class BorrowController {
 	
 
 	//功能: 用户借阅书籍归还
-	//输入参数:  userId  bookId
-	//输出参数: int  1表示成功     0表示成功    2表示用户并没有借阅这本书
+	//输入参数:  id 借阅id  bookId 书id
+	//输出参数: int  1表示成功     0表示失败    2表示用户并没有借阅这本书
 	//并发控制---------------------------多人还书
 	@PostMapping("/borrowReturn")
 	public int BorrowReturn(@RequestBody Borrow borrow)

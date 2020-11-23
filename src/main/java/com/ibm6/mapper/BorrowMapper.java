@@ -21,6 +21,7 @@ public interface BorrowMapper {
 	public BorrowDetail getBorrowById(int id);
 	public List<BorrowBookInfo> getDetailByLikeSearch(UserBorrowLikeSearch userBorrowLikeSearch);
 	public List<BorrowList> selectBorrowByUserId(int userId);
+	public List<BorrowBookInfo> selectBorrowByUserIdAndFlag(int userId);
 	public List<BorrowBookInfo> selectBorrowByPage(BorrowByPage borrowByPage);
 	public int saveBorrowInfo(Borrow borrow);
 	public int updateBorrowFlagAndTime(Borrow borrow);
@@ -35,4 +36,5 @@ public interface BorrowMapper {
 	public int getMonthRetTotal(BorrowDate borrowMonth);
 	public int getYearBorrowTotal(BorrowDate borrowMonth);
 	public int getYearRetTotal(BorrowDate borrowMonth);
+	public int selectUserBorrowTotal(int userId);
 }

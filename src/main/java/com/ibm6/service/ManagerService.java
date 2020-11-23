@@ -37,5 +37,7 @@ public class ManagerService {
 		return 0;
 	}
 	
-	
+	public List<User> findUserByPage(Integer index){
+		return mapper.findUserByPage(index);
+	}
 }

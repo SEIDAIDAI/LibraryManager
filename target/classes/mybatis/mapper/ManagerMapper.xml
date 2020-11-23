@@ -13,10 +13,14 @@
 	<update id="updateRoleByUserId">
 		update role set
 		active=0
-		where user_id = #{userId}
+		where user_id = #{userId} 
 	</update>
 	
 	<select id="findAll" resultType="com.ibm6.bean.User">
-	select * from user
+	select * from user 
+	</select>
+	
+	<select id="findUserByPage" resultType="com.ibm6.bean.User">
+	select * from user where user_id > 1000 limit #{index},5
 	</select>
 </mapper>
