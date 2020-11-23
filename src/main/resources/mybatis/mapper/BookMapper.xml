@@ -175,10 +175,11 @@
 		)
 	</insert>
 
-	<delete id="deleteById">
-		delete from book
+	<update id="deleteById">
+		update book
+		set download_amount = download_amount + left_amount, left_amount = 0
 		where book_id = #{bookId}
-	</delete>
+	</update>
 	
 	<select id="selectAllType" resultType="com.ibm6.model.BookType">
 		select * from type

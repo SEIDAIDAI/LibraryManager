@@ -73,8 +73,11 @@ public class BookService {
 		return re;
 	}
 	//删除书籍
+	//传入参数bookId
 	public int bookDelete(Book book)
 	{
+		//如果书有出借的
+		//把书进行下架 同时把简介设为 书已下架  其他不变  查询依然能显示出来
 		int re = bookMapper.deleteById(book);
 		return re;
 	}
