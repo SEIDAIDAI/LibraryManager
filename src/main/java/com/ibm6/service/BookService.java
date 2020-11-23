@@ -1,6 +1,5 @@
 package com.ibm6.service;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,11 +80,11 @@ public class BookService {
 		return re;
 	}
 	//删除书籍
+	//传入参数bookId
 	public int bookDelete(Book book)
 	{
-		book.setStoreDate(new Date());
-		book.setLeftAmount(book.getUploadAmount());
-		book.setDownloadAmount(0);
+		//如果书有出借的
+		//把书进行下架 同时把简介设为 书已下架  其他不变  查询依然能显示出来,,,,,,
 		int re = bookMapper.deleteById(book);
 		return re;
 	}
@@ -93,7 +92,6 @@ public class BookService {
 	public List<BookNation> bookNations()
 	{
 		List<BookNation> bookList = bookMapper.selectAllNation();
-
 		return bookList;
 	}
 	
