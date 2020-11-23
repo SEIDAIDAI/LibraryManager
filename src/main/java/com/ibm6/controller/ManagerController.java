@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,7 +30,8 @@ public class ManagerController {
 	//功能：分页显示管理员页面的所有图书
 	//输入参数： 页号
 	//返回参数: List<Book>
-	@RequestMapping("/managerBookByPage/{index}")
+	
+	@GetMapping("/managerBookByPage/{index}")
 	public List<Book> bookByPage(@PathVariable("index") Integer index){
 		List<Book> books = bookService.bookSearchByPage(index*5);
 		return books;
@@ -66,9 +68,24 @@ public class ManagerController {
 		return "0";
 	}
 	
-	
 	@RequestMapping("/ManagerShowUserList/{index}")
 	public List<User> showUserList(@PathVariable("index") Integer index){
 		return managerService.findUserByPage(index * 5);
 	}
+	
+	//不使用  统一用bookType
+	@RequestMapping("/managerFindBookByCondition/{index}")
+	public List<Book> managerFindBookByCondition(
+			@RequestBody Book book,
+			@PathVariable("index") Integer index){
+		return bookService.bookSearchByKeyword(book, index*5);
+	}
+	
+	@RequestMapping("/managerFindBookByType/{index}")
+	public List<Book> managerFindBookByType(
+			@RequestBody Book book,
+			@PathVariable("index") Integer index){
+		return bookService.bookSearchByType(book, index*5);
+	}
+	
 }

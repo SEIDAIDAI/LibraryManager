@@ -113,7 +113,7 @@ public class BookController {
 			@RequestBody Book book,
 			@PathVariable("index") Integer index,
 			@PathVariable("userId") Integer userId){
-		List<Book> books = bookService.bookSearchByKeyword(book,index);
+		List<Book> books = bookService.bookSearchByKeyword(book,index*5);
 		return addMyStatus(books, userId);
 	}
 	
