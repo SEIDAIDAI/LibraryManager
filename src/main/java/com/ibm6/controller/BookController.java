@@ -38,6 +38,13 @@ public class BookController {
 		return re;
 	}
 	
+	@PostMapping("/BookTypeCount")
+	public int bookTypeCount(@RequestBody Book book)
+	{
+		int re = bookService.bookTotalByType(book);
+		return re;
+	}
+	
 	@PostMapping("/BookType/{userId}/{index}")
 	public List<BookStatus> BookSearchType(
 			@RequestBody Book args,
