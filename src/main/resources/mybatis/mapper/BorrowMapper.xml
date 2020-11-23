@@ -28,6 +28,7 @@
 	<select id="selectBorrowByUserIdAndFlag" resultType="com.ibm6.model.BorrowBookInfo">
 		select
 		borrow.id,
+		book.book_id,
 		book.book_name,
 		book.nation,
 		book.type,
@@ -37,16 +38,19 @@
 		from borrow, book
 		where borrow.book_id = book.book_id and borrow.user_id = #{userId} and ret_flag = 0
 	</select>
+	
+	<select id="selectUserBorrowTotal" resultType="int">
+		select
+		count(*)
+		from borrow
+		where  borrow.user_id = #{userId};
+	</select>
 
 	<select id="selectBorrowByUserId" resultType="com.ibm6.model.BorrowList">
 		select
-		book.book_name,
-		book.author,
-		book.summary,
-		borrow.id,
-		borrow.ret_time,
-		from borrow, book
-		where borrow.book_id = book.book_id and borrow.user_id = #{userId};
+		*
+		from borrow
+		where  borrow.user_id = #{userId} and borrow.ret_flag=0;
 	</select>
 
 	<select id="getDetailByLikeSearch" resultType="com.ibm6.model.BorrowBookInfo">
@@ -84,10 +88,10 @@
 		values(#{userId}, #{bookId}, #{borrowTime}, #{retTime}, #{validTime})
 	</insert>
 	
-	<update id="updateBorrowFlag">
+	<update id="updateBorrowFlagAndTime">
 		update borrow
-		set ret_flag = 1
-		where user_id = #{userId}
+		set ret_flag = 1, ret_time = #{retTime}
+		where id=#{id}
 	</update>
 	
 	<update id="updateBookUploadInc">
@@ -106,13 +110,57 @@
 		select
 		borrow.book_id
 		from borrow
-		where borrow.user_id = #{userId} and borrow.book_id = #{bookId}
+		where borrow.user_id = #{userId} and borrow.book_id = #{bookId} and ret_flag = 0
+	</select>
+	
+	
+	<select id="getBookHasBorrowed" resultType="String">
+		select
+		borrow.book_id
+		from borrow
+		where borrow.user_id = #{userId} and ret_flag = 0
 	</select>
 	
 	<select id="getBookLeftAmount" resultType="com.ibm6.bean.Book">
 		select * 
 		from book
 		where book_id = #{bookId};
+	</select>
+	
+	<select id="getDayBorrowTotal" resultType="int">
+		select count(*)
+		from borrow
+		where borrow_time > #{today} and ret_flag = 0
+	</select>
+	
+	<select id="getDayRetTotal" resultType="int">
+		select count(*)
+		from borrow
+		where ret_time > #{today} and ret_flag = 1
+	</select>
+	
+	<select id="getMonthBorrowTotal" resultType="int">
+		select count(*)
+		from borrow
+		where borrow_time between #{start} and #{today}
+	</select>
+	
+	<select id="getMonthRetTotal" resultType="int">
+		select count(*)
+		from borrow
+		where ret_time between #{start} and #{today} and ret_flag = 1
+	</select>
+	
+	<select id="getYearBorrowTotal" resultType="int">
+		select count(*)
+		from borrow
+		where borrow_time between #{start} and #{today}
+	</select>
+	
+	<select id="getYearRetTotal" resultType="int">
+		select count(*)
+		from borrow
+		where ret_time between #{start} and #{today} and ret_flag = 1
 	</select>
 </mapper>
 

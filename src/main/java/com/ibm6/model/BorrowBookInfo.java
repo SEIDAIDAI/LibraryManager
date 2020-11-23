@@ -10,6 +10,7 @@ public class BorrowBookInfo {
 	private String type;
 	private String length;
 	private Date borrowTime;
+	private int bookId;
 	public int getId() {
 		return id;
 	}
@@ -53,7 +54,10 @@ public class BorrowBookInfo {
 	
 		this.borrowTime = borrowTime;
 	}
-
-	
-	
+	public int getBookId() {
+		return bookId;
+	}
+	public void setBookId(int bookId) {
+		this.bookId = bookId;
+	}
 }

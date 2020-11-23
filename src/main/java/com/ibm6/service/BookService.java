@@ -1,5 +1,6 @@
 package com.ibm6.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,12 +76,16 @@ public class BookService {
 	//新增书籍
 	public int bookInsert(Book book)
 	{
+		System.out.println(book);
 		int re = bookMapper.saveNewBook(book);
 		return re;
 	}
 	//删除书籍
 	public int bookDelete(Book book)
 	{
+		book.setStoreDate(new Date());
+		book.setLeftAmount(book.getUploadAmount());
+		book.setDownloadAmount(0);
 		int re = bookMapper.deleteById(book);
 		return re;
 	}

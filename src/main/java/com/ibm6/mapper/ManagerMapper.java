@@ -16,4 +16,6 @@ public interface ManagerMapper {
 	public int updateRoleByUserId(Integer userId);
 	
 	public List<User> findAll();
+	
+	public List<User> findUserByPage(Integer index);
 }

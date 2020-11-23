@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ibm6.bean.Book;
+import com.ibm6.bean.User;
 import com.ibm6.model.BooksInfo;
 import com.ibm6.service.BookService;
 import com.ibm6.service.ManagerService;
@@ -63,5 +64,11 @@ public class ManagerController {
 			return "1";
 		}
 		return "0";
+	}
+	
+	
+	@RequestMapping("/ManagerShowUserList/{index}")
+	public List<User> showUserList(@PathVariable("index") Integer index){
+		return managerService.findUserByPage(index * 5);
 	}
 }

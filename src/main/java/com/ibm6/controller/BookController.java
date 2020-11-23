@@ -59,12 +59,13 @@ public class BookController {
 	public List<BookStatus> BookSearchType(
 			@RequestBody Book args,
 			@PathVariable("index") Integer index,
-			@PathVariable("userId") Integer userId)
-	{
+			@PathVariable("userId") Integer userId){
 		List<Book> books = bookService.bookSearchByType(args,index*5);
 		List<Integer> mybooks=new ArrayList<Integer>();
 		List<BorrowList> borrowList = borrowService.getBorrowList(userId);
+		System.out.println(borrowList);
 		for(BorrowList bl:borrowList) {
+			System.out.println(bl.getBookId());
 			mybooks.add(bl.getBookId());
 		}
 		List<BookStatus> bookStatuses=new ArrayList<BookStatus>();
@@ -77,6 +78,7 @@ public class BookController {
 				}else {
 					temp.setStatus(0);
 				}
+				
 			}
 			temp.setBook(bs);
 			bookStatuses.add(temp);
@@ -181,7 +183,9 @@ public class BookController {
 	
 	//
 	@RequestMapping("/bookStatus/{index}/{userId}")
-	public List<BookStatus> bookStatus(@PathVariable("index") Integer index,@PathVariable("userId") Integer userId){
+	public List<BookStatus> bookStatus(
+			@PathVariable("index") Integer index,
+			@PathVariable("userId") Integer userId){
 		List<Book> books = bookService.bookSearchByPage(index*5);
 		List<Integer> mybooks=new ArrayList<Integer>();
 		List<BorrowList> borrowList = borrowService.getBorrowList(userId);
