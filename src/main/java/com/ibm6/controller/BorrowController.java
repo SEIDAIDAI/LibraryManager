@@ -15,7 +15,9 @@ import com.ibm6.model.BorrowBookInfo;
 import com.ibm6.model.BorrowByPage;
 import com.ibm6.model.BorrowDetail;
 import com.ibm6.model.BorrowList;
+import com.ibm6.model.BorrowUserInfo;
 import com.ibm6.model.UserBorrowLikeSearch;
+import com.ibm6.model.UserNameAndTotalNum;
 import com.ibm6.service.borrowService;
 
 @RestController
@@ -79,8 +81,9 @@ public class BorrowController {
 	// 输入参数 : userId
 	// 返回结果: int
 	@GetMapping("/borrowCount/{userId}")
-	public int BorrowCount(@PathVariable("userId") int userId) {
-		int re = service.getBorrowTotal(userId);
+	public UserNameAndTotalNum BorrowCount(@PathVariable("userId") int userId) {
+		UserNameAndTotalNum re = new UserNameAndTotalNum();
+		re = service.getBorrowTotalAndName(userId);
 		return re;
 	}
 
@@ -98,8 +101,9 @@ public class BorrowController {
 	 * Date borrowTime;
 	 */
 	@PostMapping("/borrowPage")
-	public List<BorrowBookInfo> BorrowPage(@RequestBody BorrowByPage borrowByPage) {
-		List<BorrowBookInfo> re = service.getBorrowByPage(borrowByPage);
+	public List<BorrowUserInfo> BorrowPage(@RequestBody BorrowByPage borrowByPage) 
+	{
+		List<BorrowUserInfo> re = service.getBorrowByPage(borrowByPage);
 		return re;
 	}
 	

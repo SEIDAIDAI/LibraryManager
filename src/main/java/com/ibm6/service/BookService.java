@@ -28,7 +28,6 @@ public class BookService {
 	//根据书四个条件查询
 	public List<Book> bookSearchByType(Book book,Integer index) {
 		List<Book> bookList = bookMapper.selectByCondition(book,index);
-		
 		return bookList;
 	}
 	

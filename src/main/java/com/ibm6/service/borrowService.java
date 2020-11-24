@@ -16,7 +16,9 @@ import com.ibm6.model.BorrowByPage;
 import com.ibm6.model.BorrowDate;
 import com.ibm6.model.BorrowDetail;
 import com.ibm6.model.BorrowList;
+import com.ibm6.model.BorrowUserInfo;
 import com.ibm6.model.UserBorrowLikeSearch;
+import com.ibm6.model.UserNameAndTotalNum;
 
 @Service
 public class borrowService {
@@ -26,6 +28,21 @@ public class borrowService {
 	
 	public BorrowDetail getBorrowInfo(int id) {
 		BorrowDetail re =  mapper.getBorrowById(id);
+		long time1 = re.getRetTime().getTime();
+		long time2 = new Date().getTime();
+		long di = 1000*3600*24;
+		int validTime = (int) ((time1 - time2) / di);
+		if (validTime <= 0)
+			validTime = 0;
+		/*
+		 * System.out.println(time1); System.out.println(time2); System.out.println(re);
+		 */
+		re.setValidTime(validTime); 
+		/*
+		 * System.out.println("------------------------");
+		 * System.out.println(validTime);
+		 * System.out.println("------------------------");
+		 */
 		return re;
 	}
 	
@@ -46,16 +63,18 @@ public class borrowService {
 		return borrowDetail;
 	}
 
-	public int getBorrowTotal(int userId)
+	public UserNameAndTotalNum getBorrowTotalAndName(int userId)
 	{
-		int re = mapper.selectUserBorrowTotal(userId);
+		UserNameAndTotalNum re = new UserNameAndTotalNum();
+		re.setNum(mapper.selectUserBorrowTotal(userId));
+		re.setName(mapper.selectUserName(userId));
 		return re;
 	}
 	
-	public List<BorrowBookInfo> getBorrowByPage(BorrowByPage borrowByPage)
+	public List<BorrowUserInfo> getBorrowByPage(BorrowByPage borrowByPage)
 	{
 		borrowByPage.setIndex(borrowByPage.getIndex() * 5);
-		List<BorrowBookInfo> re = mapper.selectBorrowByPage(borrowByPage);
+		List<BorrowUserInfo> re = mapper.selectBorrowByPage(borrowByPage);
 		return re;
 	}
 	

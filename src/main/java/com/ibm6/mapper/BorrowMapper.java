@@ -12,6 +12,7 @@ import com.ibm6.model.BorrowByPage;
 import com.ibm6.model.BorrowDate;
 import com.ibm6.model.BorrowDetail;
 import com.ibm6.model.BorrowList;
+import com.ibm6.model.BorrowUserInfo;
 import com.ibm6.model.UserBorrowLikeSearch;
 
 
@@ -22,7 +23,7 @@ public interface BorrowMapper {
 	public List<BorrowBookInfo> getDetailByLikeSearch(UserBorrowLikeSearch userBorrowLikeSearch);
 	public List<BorrowList> selectBorrowByUserId(int userId);
 	public List<BorrowBookInfo> selectBorrowByUserIdAndFlag(int userId);
-	public List<BorrowBookInfo> selectBorrowByPage(BorrowByPage borrowByPage);
+	public List<BorrowUserInfo> selectBorrowByPage(BorrowByPage borrowByPage);
 	public int saveBorrowInfo(Borrow borrow);
 	public int updateBorrowFlagAndTime(Borrow borrow);
 	public int updateBookUploadInc(Borrow borrow);
@@ -37,4 +38,5 @@ public interface BorrowMapper {
 	public int getYearBorrowTotal(BorrowDate borrowMonth);
 	public int getYearRetTotal(BorrowDate borrowMonth);
 	public int selectUserBorrowTotal(int userId);
+	public String selectUserName(int userId);
 }

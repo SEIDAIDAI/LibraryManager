@@ -102,14 +102,14 @@
 	<select id="findUserCountByExample" resultType="int">
 		select count(*) from user where 1=1
 		<if test="name!=null and name!=''">
-			and name like CONCAT(CONCAT('%',#{name},'%'))
+			and (name like '%${name}%' or user_id like '%${name}%') 
 		</if>
 	</select>
 	
 	<select id="findUserByExample" resultType="com.ibm6.bean.User">
 		select * from user where 1=1
 			<if test="user.name!=null and user.name!=''">
-				and name like CONCAT(CONCAT('%',#{user.name},'%'))
+				and (name like '%${user.name}%' or user_id like '%${user.name}%') 
 			</if>
 		limit #{index},5
 	</select>

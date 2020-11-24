@@ -21,10 +21,16 @@
 		borrow.valid_time
 		from borrow, book
 		where borrow.book_id = book.book_id
-		and borrow.id = #{id};
+		and borrow.id = #{id}
+		order by borrow.borrow_time
 	</select>
-	
-	
+
+	<select id="selectUserName" resultType="String">
+		select name 
+		from user
+		where user_id = #{userId}
+	</select>
+
 	<select id="selectBorrowByUserIdAndFlag" resultType="com.ibm6.model.BorrowBookInfo">
 		select
 		borrow.id,
@@ -69,7 +75,7 @@
 	
 	
 	<!-- 要改的 -->
-	<select id="selectBorrowByPage" resultType="com.ibm6.model.BorrowBookInfo">
+<!-- 	<select id="selectBorrowByPage" resultType="com.ibm6.model.BorrowBookInfo">
 		select
 		borrow.id,
 		book.book_name,
@@ -78,6 +84,19 @@
 		book.theme,
 		book.length,
 		borrow.borrow_time
+		from borrow, book
+		where borrow.book_id = book.book_id and borrow.user_id = #{userId}
+		limit #{index}, 5
+	</select> -->
+	<select id="selectBorrowByPage" resultType="com.ibm6.model.BorrowUserInfo">
+		select
+		borrow.id,
+		book.book_name,
+		book.nation,
+		book.type,
+		book.theme,
+		book.length,
+		borrow.ret_time
 		from borrow, book
 		where borrow.book_id = book.book_id and borrow.user_id = #{userId}
 		limit #{index}, 5

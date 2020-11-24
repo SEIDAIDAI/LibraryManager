@@ -85,6 +85,7 @@ public class ManagerController {
 	public List<Book> managerFindBookByType(
 			@RequestBody Book book,
 			@PathVariable("index") Integer index){
+		System.out.println(book);
 		return bookService.bookSearchByType(book, index*5);
 	}
 	

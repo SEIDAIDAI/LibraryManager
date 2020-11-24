@@ -92,7 +92,6 @@ public class BookController {
 	@PostMapping("/BookInfo")
 	public Book BookInformation(@RequestBody Book args)
 	{
-		System.out.println(args.getBookId());
 		Book re = bookService.showBookInfo(args);
 		return re;
 	}

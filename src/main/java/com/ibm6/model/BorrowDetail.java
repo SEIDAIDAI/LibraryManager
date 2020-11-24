@@ -7,6 +7,8 @@ public class BorrowDetail {
 	private Date borrowTime;
 	private Date retTime;
 	private int validTime;
+	
+	
 	public String getBookName() {
 		return bookName;
 	}
