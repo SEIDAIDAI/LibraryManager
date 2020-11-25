@@ -249,6 +249,10 @@
 		from book
 		where book_id = #{bookId}
 	</select>
+	
+	<select id="getByBookName" resultType="com.ibm6.bean.Book">
+		select * from book where book_name=#{bookName}
+	</select>
 </mapper>
 
 

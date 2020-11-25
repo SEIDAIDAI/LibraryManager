@@ -136,7 +136,11 @@ public class BookController {
 	@PostMapping("/BookInsert")
 	public int BookInsert(@RequestBody Book book)
 	{
+		if(bookService.findByBookName(book.getBookName())!=null) {
+			return -1;
+		}
 		int re = bookService.bookInsert(book);
+			
 		return re;
 	}
 	
