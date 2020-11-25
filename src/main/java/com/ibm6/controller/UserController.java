@@ -64,8 +64,7 @@ public class UserController {
 	public User updateMyInfo(@RequestBody User user) {
 		if(userService.updateById(user)==1) {
 			return userService.showUser(user.getUserId());
-		}
-		else {
+		}else {
 			return user;
 		}
 	}

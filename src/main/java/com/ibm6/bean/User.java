@@ -2,12 +2,16 @@ package com.ibm6.bean;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
+
 public class User {
 	private int userId;
 	private String name;
 	private String gender;
 	private String age; 
 	private String email;
+	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date birthday;
 	private String phone;
 	private String address;
