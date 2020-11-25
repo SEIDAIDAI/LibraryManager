@@ -1,5 +1,7 @@
 package com.ibm6.service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import com.ibm6.model.BookLength;
 import com.ibm6.model.BookNation;
 import com.ibm6.model.BookTheme;
 import com.ibm6.model.BookType;
+import com.ibm6.model.BookUserList;
 
 @Service
 public class BookService {
@@ -68,13 +71,13 @@ public class BookService {
 	public int bookInfoUpdate(Book book)
 	{
 		int re = bookMapper.updateById(book);
-
 		return re;
 	}
 	//新增书籍
 	public int bookInsert(Book book)
 	{
-		System.out.println(book);
+		book.setLeftAmount(book.getUploadAmount());
+		book.setStoreDate(new Date());
 		int re = bookMapper.saveNewBook(book);
 		return re;
 	}
@@ -104,6 +107,28 @@ public class BookService {
 	
 	public List<BookLength> bookLengths(){
 		return bookMapper.selectAllLength();
+	}
+	
+	public List<BookUserList> bookUserList(int bookId)
+	{
+		List<BookUserList> re = bookMapper.selectBookUserList(bookId);
+		long retTime;
+		long today;
+		long di = 1000*3600*24;
+		Calendar ret = Calendar.getInstance();
+		for (BookUserList i : re)
+		{
+			ret.setTime(i.getBorrowTime());
+			ret.add(Calendar.MONTH, 1);
+			i.setRetTime(ret.getTime());
+			retTime = ret.getTime().getTime();
+			today = new Date().getTime();
+			int validTime = (int) ((retTime - today) / di);
+			if (validTime <= 0)
+				validTime = 0;
+			i.setValidTime(validTime); 
+		}
+		return re;
 	}
 }
 

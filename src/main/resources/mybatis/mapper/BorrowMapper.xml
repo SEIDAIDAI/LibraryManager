@@ -22,7 +22,7 @@
 		from borrow, book
 		where borrow.book_id = book.book_id
 		and borrow.id = #{id}
-		order by borrow.borrow_time
+		order by borrow.borrow_time desc
 	</select>
 
 	<select id="selectUserName" resultType="String">
@@ -42,7 +42,7 @@
 		book.length,
 		borrow.borrow_time
 		from borrow, book
-		where borrow.book_id = book.book_id and borrow.user_id = #{userId} and ret_flag = 0
+		where borrow.book_id = book.book_id and borrow.user_id = #{userId} and ret_flag = 0 order by borrow.borrow_time desc
 	</select>
 	
 	<select id="selectUserBorrowTotal" resultType="int">
@@ -56,7 +56,16 @@
 		select
 		*
 		from borrow
-		where  borrow.user_id = #{userId} and borrow.ret_flag=0;
+		where  borrow.user_id = #{userId} and borrow.ret_flag=0 order by ret_time desc;
+	</select>
+	
+	
+	<select id="getDetailByLikeSearchCount" resultType="int">
+		select
+		count(*)
+		from borrow, book
+		where borrow.book_id = book.book_id
+		and borrow.user_id = #{userId} and book.book_name like '%${bookName}%';
 	</select>
 
 	<select id="getDetailByLikeSearch" resultType="com.ibm6.model.BorrowBookInfo">
@@ -70,7 +79,8 @@
 		borrow.borrow_time
 		from borrow, book
 		where borrow.book_id = book.book_id
-		and borrow.user_id = #{userId} and book.book_name like '%${bookName}%'
+		and borrow.user_id = #{userId} and book.book_name like '%${bookName}%' order by borrow.borrow_time desc
+		limit #{index}, 5
 	</select>
 	
 	
@@ -98,7 +108,7 @@
 		book.length,
 		borrow.ret_time
 		from borrow, book
-		where borrow.book_id = book.book_id and borrow.user_id = #{userId}
+		where borrow.book_id = book.book_id and borrow.user_id = #{userId} order by borrow.ret_time desc
 		limit #{index}, 5
 	</select>
 	
@@ -181,6 +191,7 @@
 		from borrow
 		where ret_time between #{start} and #{today} and ret_flag = 1
 	</select>
+	
 </mapper>
 
 

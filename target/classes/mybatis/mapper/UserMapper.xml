@@ -23,19 +23,21 @@
 	</delete>
 
 	<select id="getTotalUserCount" resultType="int">
-		select count(*) from user where user_id > 1000;
+		select count(*) from
+		user where user_id > 1000;
 	</select>
-	
+
 	<select id="findAll" resultType="com.ibm6.bean.User">
 		select * from user
 	</select>
-	
+
 	<select id="findById" resultType="com.ibm6.bean.User">
-		select * from user where user_id = #{id}
+		select * from user where
+		user_id = #{id}
 	</select>
-	
+
 	<update id="updateById" parameterType="com.ibm6.bean.User">
-		update user set 
+		update user set
 		<if test="name!=null">
 			name=#{name}
 		</if>
@@ -94,24 +96,61 @@
 		</set>
 		where user_id = #{userId}
 	</update>
-	
-	<select id="findUserByPage" resultType="com.ibm6.bean.User">
-		select * from user limit #{index},5
+
+	<select id="findUserByPage" resultType="com.ibm6.model.UserAndAccount">
+		select user.user_id,
+		role.user_account,
+		user.name,
+		user.gender,
+		user.age,
+		user.email,
+		user.birthday,
+		user.phone,
+		user.address,
+		user.description
+		from
+		user,
+		role
+		limit #{index},5
 	</select>
 
 	<select id="findUserCountByExample" resultType="int">
-		select count(*) from user where 1=1
+		select
+		count(*)
+		from user,role
+		where
+		user.user_id = role.user_id 
 		<if test="name!=null and name!=''">
-			and (name like '%${name}%' or user_id like '%${name}%') 
+			and (user.name like '%${name}%' or role.user_account like '%${name}%')  
 		</if>
+		<!-- and role.acitve=1 -->
 	</select>
-	
-	<select id="findUserByExample" resultType="com.ibm6.bean.User">
-		select * from user where 1=1
-			<if test="user.name!=null and user.name!=''">
-				and (name like '%${user.name}%' or user_id like '%${user.name}%') 
-			</if>
+
+	<select id="findUserByExample" resultType="com.ibm6.model.UserAndAccount">
+		<!-- select * from user where 1=1 <if test="user.name!=null and user.name!=''"> 
+			and (name like '%${user.name}%' or user_id like '%${user.name}%') </if> limit 
+			#{index},5 -->
+		SELECT
+		user.user_id,
+		role.user_account,
+		user.NAME,
+		user.gender,
+		user.age,
+		user.email,
+		user.birthday,
+		user.phone,
+		user.address,
+		user.description
+		FROM
+		USER,
+		role
+		WHERE
+		USER .user_id = role.user_id 
+		<if test="user.name!=null and user.name!=''">
+			and (user.name like '%${user.name}%' or role.user_account like '%${user.name}%')  
+		</if>
 		limit #{index},5
+		<!-- and role.acitve=1 -->
 	</select>
 </mapper>
 

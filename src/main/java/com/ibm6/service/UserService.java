@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ibm6.bean.User;
 import com.ibm6.mapper.UserMapper;
+import com.ibm6.model.UserAndAccount;
 
 @Service
 public class UserService {
@@ -41,7 +42,7 @@ public class UserService {
 		return userMapper.findUserCountByExample(user);
 	}
 	
-	public List<User> findUserByExample(User user,Integer index) {
+	public List<UserAndAccount> findUserByExample(User user,Integer index) {
 		return userMapper.findUserByExample(user,index);
 	}
 }

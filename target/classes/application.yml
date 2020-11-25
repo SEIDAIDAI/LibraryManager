@@ -17,7 +17,7 @@ spring:
     username: root 
     password: root  #\u4fee\u6539\u4e3a\u81ea\u5df1\u7684\u6570\u636e\u5e93\u5bc6\u7801
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/library?serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://localhost:3306/library?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false
     
     
 mybatis:

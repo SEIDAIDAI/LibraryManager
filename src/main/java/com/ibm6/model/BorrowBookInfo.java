@@ -11,6 +11,13 @@ public class BorrowBookInfo {
 	private String length;
 	private Date borrowTime;
 	private int bookId;
+	private Date retTime;
+	public final Date getRetTime() {
+		return retTime;
+	}
+	public final void setRetTime(Date retTime) {
+		this.retTime = retTime;
+	}
 	public int getId() {
 		return id;
 	}

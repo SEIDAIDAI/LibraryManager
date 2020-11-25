@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ibm6.bean.Book;
 import com.ibm6.bean.User;
+import com.ibm6.model.BookUserList;
 import com.ibm6.model.BooksInfo;
+import com.ibm6.model.BorrowBookInfo;
 import com.ibm6.service.BookService;
 import com.ibm6.service.ManagerService;
 import com.ibm6.service.borrowService;
@@ -59,13 +61,23 @@ public class ManagerController {
 	
 	//功能：注销用户
 	//输入参数:  userId
-	//输出参数: int  1成功    0失败
-	@RequestMapping("/deleteUser/{userId}")
+	//输出参数:  1成功 ；   0书没还完，注销失败；   -1删除失败
+	@RequestMapping("/managerDeleteUser/{userId}")
 	public String deleteUser(@PathVariable("userId") Integer userId) {
+		List<BorrowBookInfo> borrowShelf = borrowService.getBorrowShelf(userId);
+//		for(BorrowBookInfo b:borrowShelf) {
+//			System.out.println(b.getBookId());
+//		}
+		System.out.println(borrowShelf.size());
+		
+		
+		if (borrowShelf.get(0).getBookId()!=0) {
+			return "0";
+		}
 		if (managerService.deleteUser(userId)==1) {
 			return "1";
 		}
-		return "0";
+		return "-1";
 	}
 	
 	@RequestMapping("/ManagerShowUserList/{index}")
@@ -89,4 +101,9 @@ public class ManagerController {
 		return bookService.bookSearchByType(book, index*5);
 	}
 	
+	@GetMapping("/managerBookUserList/{bookId}")
+	public List<BookUserList> managerBookUserList(@PathVariable("bookId") Integer bookId)
+	{
+		return bookService.bookUserList(bookId);   
+	}
 }

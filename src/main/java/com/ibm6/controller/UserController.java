@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ibm6.bean.User;
+import com.ibm6.model.UserAndAccount;
 import com.ibm6.service.UserService;
 
 
@@ -99,6 +100,26 @@ public class UserController {
 	String address;
 	String description ;
 	 */
+//	@RequestMapping("/showUserList/{index}")
+//	public List<User> showUserList(@PathVariable("index") Integer index){
+//		return userService.findUserByPage(index * 5);
+//	}
+	
+	//功能：分页显示所有用户
+		//输入参数：index  页号
+		//输出参数  List<User>
+		/*
+		int userId;
+		String account
+		String name;
+		String gender;
+		String age; 
+		String email;
+		Date birthday;
+		String phone;
+		String address;
+		String description ;
+		 */
 	@RequestMapping("/showUserList/{index}")
 	public List<User> showUserList(@PathVariable("index") Integer index){
 		return userService.findUserByPage(index * 5);
@@ -116,7 +137,7 @@ public class UserController {
 	//输入参数: index 页号  
 	//输出参数：List<User>
 	@RequestMapping("/findUserByExample/{index}")
-	public List<User> findUserByExample(@RequestBody User user,@PathVariable("index") Integer index){
+	public List<UserAndAccount> findUserByExample(@RequestBody User user,@PathVariable("index") Integer index){
 		return userService.findUserByExample(user,index*5);
 	}
 }

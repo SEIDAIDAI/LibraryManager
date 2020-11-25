@@ -66,4 +66,10 @@ public class AnnouncementController {
 		int re=service.announcementInsert(ann);
 		return re;
 	}
+	
+	
+	@GetMapping("showAnnouncement")
+	public String showAnnouncement() {
+		return service.showNewAnnouncement();
+	}
 }

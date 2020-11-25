@@ -1,8 +1,11 @@
 package com.ibm6.service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,12 +14,15 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ibm6.bean.Book;
 import com.ibm6.bean.Borrow;
 import com.ibm6.mapper.BorrowMapper;
+import com.ibm6.model.BookUserList;
 import com.ibm6.model.BorrowBookInfo;
 import com.ibm6.model.BorrowByPage;
 import com.ibm6.model.BorrowDate;
 import com.ibm6.model.BorrowDetail;
 import com.ibm6.model.BorrowList;
 import com.ibm6.model.BorrowUserInfo;
+import com.ibm6.model.FiveMonthData;
+import com.ibm6.model.MonthData;
 import com.ibm6.model.UserBorrowLikeSearch;
 import com.ibm6.model.UserNameAndTotalNum;
 
@@ -28,39 +34,65 @@ public class borrowService {
 	
 	public BorrowDetail getBorrowInfo(int id) {
 		BorrowDetail re =  mapper.getBorrowById(id);
-		long time1 = re.getRetTime().getTime();
-		long time2 = new Date().getTime();
+
+		Calendar ret = Calendar.getInstance();
+		ret.setTime(re.getBorrowTime());
+		ret.add(Calendar.MONTH, 1);
+		long retTime = ret.getTime().getTime();
+		long today = new Date().getTime();
 		long di = 1000*3600*24;
-		int validTime = (int) ((time1 - time2) / di);
+		int validTime = (int) ((retTime - today) / di);
 		if (validTime <= 0)
 			validTime = 0;
-		/*
-		 * System.out.println(time1); System.out.println(time2); System.out.println(re);
-		 */
 		re.setValidTime(validTime); 
-		/*
-		 * System.out.println("------------------------");
-		 * System.out.println(validTime);
-		 * System.out.println("------------------------");
-		 */
 		return re;
 	}
 	
 	public List<BorrowBookInfo> getBorrowShelf(int userId)
 	{
 		List<BorrowBookInfo> re = mapper.selectBorrowByUserIdAndFlag(userId);
+		if (re.size() == 0)  //没有对象
+		{
+			re.add(new BorrowBookInfo());
+			re.add(new BorrowBookInfo());
+			re.add(new BorrowBookInfo());
+		}
+		else if (re.size() == 1)  //有一个对象
+		{
+			re.add(new BorrowBookInfo());
+			re.add(new BorrowBookInfo());
+		}
+		else if(re.size() == 2)
+		{
+			re.add(new BorrowBookInfo());
+		}
 		return re;
 	}
 	
 	public List<BorrowList> getBorrowList(int userId)
 	{
 		List<BorrowList> re = mapper.selectBorrowByUserId(userId);
+
 		return re;
 	}
 	
 	public List<BorrowBookInfo> borrowUserLikeSearch(UserBorrowLikeSearch userBorrowLikeSearch) {
 		List<BorrowBookInfo> borrowDetail = mapper.getDetailByLikeSearch(userBorrowLikeSearch);
+
+		Calendar ret = Calendar.getInstance();
+		for (BorrowBookInfo i : borrowDetail)
+		{
+			ret.setTime(i.getBorrowTime());
+			ret.add(Calendar.MONTH, 1);
+			i.setRetTime(ret.getTime()); 
+		}
 		return borrowDetail;
+	}
+	
+	public int borrowUserLikeSearchCount(UserBorrowLikeSearch userBorrowLikeSearch)
+	{
+		int re = mapper.getDetailByLikeSearchCount(userBorrowLikeSearch);
+		return re;	
 	}
 
 	public UserNameAndTotalNum getBorrowTotalAndName(int userId)
@@ -177,7 +209,6 @@ public class borrowService {
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
-		System.out.println(calendar.getTime());
 		BorrowDate borrowDate = new BorrowDate();
 		borrowDate.setStart(calendar.getTime());
 		borrowDate.setToday(new Date());
@@ -192,6 +223,81 @@ public class borrowService {
 		//2021-11-21 11:29:23 
 
 		int re = mapper.getMonthBorrowTotal(getBorrowMonth());
+		return re;
+	}
+	
+	public Calendar GetMonthStart()
+	{
+		Calendar start = Calendar.getInstance();
+		start.setTime(new Date());
+//		start.set(Calendar.MONTH, 1);
+		start.set(Calendar.DAY_OF_MONTH, 1);
+		start.set(Calendar.HOUR_OF_DAY, 0);
+		start.set(Calendar.MINUTE, 0);
+		start.set(Calendar.SECOND, 0);
+		start.set(Calendar.SECOND, -1);
+		return start;
+	}
+	
+	public FiveMonthData borrowFiveMonthData(Integer n)
+	{
+		FiveMonthData re = new FiveMonthData();
+		
+		int offset = n - 1 - 1;
+		//从当前月  往前数5个月
+		Calendar start = GetMonthStart();
+		//Calendar  月份从 0 开始算起
+		start.add(Calendar.MONTH, -offset - 1);
+		Calendar end = GetMonthStart();
+		end.add(Calendar.MONTH, -(offset - 1) - 1);
+		BorrowDate condition = new BorrowDate();
+		List<MonthData> month = new ArrayList<MonthData>();
+		
+		for (int i = 1; i < n; i++)
+		{
+			if (start.compareTo(end) < 0){
+				condition.setStart(start.getTime());
+				condition.setToday(end.getTime());
+			}
+			else{
+				condition.setStart(end.getTime());
+				condition.setToday(start.getTime());
+			}
+			MonthData data = new MonthData();
+			if (start.get(Calendar.MONTH) + 2 != 13){
+				data.setValue(mapper.getMonthBorrowTotal(condition));
+				data.setName((start.get(Calendar.MONTH) + 2) + "");
+				
+			}
+			else {
+				data.setValue(mapper.getMonthBorrowTotal(condition));
+				data.setName(1 + "");
+			}
+			month.add(data);
+			start.add(Calendar.MONTH, 1);
+			end.add(Calendar.MONTH, 1);
+		}
+
+		if (start.compareTo(end) < 0){
+			condition.setStart(start.getTime());
+			condition.setToday(end.getTime());
+		}
+		else{
+			condition.setStart(end.getTime());
+			condition.setToday(start.getTime());
+		}
+		MonthData data = new MonthData();
+		if (start.get(Calendar.MONTH) + 2 != 13){
+			data.setValue(mapper.getMonthBorrowTotal(condition));
+			data.setName(start.get(Calendar.MONTH) + 2 + "");
+			
+		}
+		else {
+			data.setValue(mapper.getMonthBorrowTotal(condition));
+			data.setName(1 + "");
+		}
+		month.add(data);
+		re.setFiveMonth(month);
 		return re;
 	}
 	  
@@ -234,4 +340,5 @@ public class borrowService {
 		int re = mapper.getYearRetTotal(getBorrowYear());
 		return re;
 	}
+	
 }

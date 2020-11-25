@@ -15,4 +15,6 @@ public interface AnnouncementMapper {
 	public Announcement getById(Announcement ann);
 	public int updateById(Announcement announcement);
 	public int announcementInsert(Announcement announcement);
+	
+	public String showNewAnnouncement();
 }

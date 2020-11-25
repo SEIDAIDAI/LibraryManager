@@ -15,7 +15,6 @@ public class Book {
 	private int downloadAmount;
 	private String author;
 	private String summary;
-
 	public int getBookId() {
 		return bookId;
 	}
@@ -76,18 +75,17 @@ public class Book {
 	public void setDownloadAmount(int downloadAmount) {
 		this.downloadAmount = downloadAmount;
 	}
-	
-	public String getSummary() {
-		return summary;
-	}
-	public void setSummary(String summary) {
-		this.summary = summary;
-	}
 	public String getAuthor() {
 		return author;
 	}
 	public void setAuthor(String author) {
 		this.author = author;
+	}
+	public String getSummary() {
+		return summary;
+	}
+	public void setSummary(String summary) {
+		this.summary = summary;
 	}
 	@Override
 	public String toString() {
@@ -96,5 +94,7 @@ public class Book {
 				+ ", uploadAmount=" + uploadAmount + ", downloadAmount=" + downloadAmount + ", author=" + author
 				+ ", summary=" + summary + "]";
 	}
+
+
 	
 }

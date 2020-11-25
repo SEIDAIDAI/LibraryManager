@@ -10,6 +10,7 @@ import com.ibm6.model.BookLength;
 import com.ibm6.model.BookNation;
 import com.ibm6.model.BookTheme;
 import com.ibm6.model.BookType;
+import com.ibm6.model.BookUserList;
 
 public interface BookMapper {
 	public List<Book> selectByCondition(@Param("book")Book book,@Param("index") Integer index);
@@ -27,4 +28,5 @@ public interface BookMapper {
 	public List<BookLength> selectAllLength();
 	public int getBookTotalByType(Book book);
 	public int getBookTotalByKeyword(Book book);
+	public List<BookUserList> selectBookUserList(int bookId);
 }

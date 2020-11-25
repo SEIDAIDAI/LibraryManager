@@ -7,12 +7,14 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.ibm6.bean.Book;
 import com.ibm6.bean.Borrow;
+import com.ibm6.model.BookUserList;
 import com.ibm6.model.BorrowBookInfo;
 import com.ibm6.model.BorrowByPage;
 import com.ibm6.model.BorrowDate;
 import com.ibm6.model.BorrowDetail;
 import com.ibm6.model.BorrowList;
 import com.ibm6.model.BorrowUserInfo;
+import com.ibm6.model.FiveMonthData;
 import com.ibm6.model.UserBorrowLikeSearch;
 
 
@@ -39,4 +41,5 @@ public interface BorrowMapper {
 	public int getYearRetTotal(BorrowDate borrowMonth);
 	public int selectUserBorrowTotal(int userId);
 	public String selectUserName(int userId);
+	public int getDetailByLikeSearchCount(UserBorrowLikeSearch userBorrowLikeSearch);
 }

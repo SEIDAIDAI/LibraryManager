@@ -151,15 +151,39 @@
 
 	<update id="updateById">
 		update book
-		set book_name = #{bookName},
-		nation = #{nation},
-		type = #{type},
-		length = #{length},
-		theme = #{theme},
-		store_date = #{storeDate},
-		left_amount = #{leftAmount},
-		upload_amount = #{uploadAmount},
-		download_amount = #{downloadAmount}
+		<set>
+		<if test="bookName!=null and bookName!=''">
+			book_name = #{bookName},
+		</if>
+		<if test="nation!=null and nation!=''">
+			nation = #{nation},
+		</if>
+		<if test="author!=null and author!=''">
+			author = #{author},
+		</if>
+		<if test="type!=null and type!=''">
+			type = #{type},
+		</if>
+		<if test="length!=null and length!=''">
+			length = #{length},
+		</if>
+		<if test="theme!=null and theme!=''">
+			theme = #{theme},
+		</if>
+		<if test="leftAmount!=0">
+			left_amount = #{leftAmount},
+		</if>
+		<if test="uploadAmount!=0">
+			upload_amount = #{uploadAmount},
+		</if>
+		<if test="downloadAmount!=0">
+			download_amount = #{downloadAmount},
+		</if>		
+		<if test="summary!=null and summary!=''">
+			summary = #{summary},
+		</if>
+		
+		</set>
 		where book_id = #{bookId}
 	</update>
 
@@ -208,6 +232,17 @@
 	
 	<select id="selectAllLength" resultType="com.ibm6.model.BookLength">
 		select * from length order by CONVERT(length USING GBK)
+	</select>
+	
+	<select id="selectBookUserList" resultType="com.ibm6.model.BookUserList">
+		select 
+		user.name,
+		borrow.borrow_time,
+		borrow.ret_time
+		from user, book, borrow, role
+		where borrow.user_id = user.user_id and borrow.book_id = book.book_id and role.user_id = borrow.user_id
+		and borrow.book_id = #{booId} and role.active = 1
+		order by borrow.borrow_time desc
 	</select>
 </mapper>
 

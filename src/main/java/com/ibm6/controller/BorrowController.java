@@ -16,6 +16,7 @@ import com.ibm6.model.BorrowByPage;
 import com.ibm6.model.BorrowDetail;
 import com.ibm6.model.BorrowList;
 import com.ibm6.model.BorrowUserInfo;
+import com.ibm6.model.FiveMonthData;
 import com.ibm6.model.UserBorrowLikeSearch;
 import com.ibm6.model.UserNameAndTotalNum;
 import com.ibm6.service.borrowService;
@@ -73,8 +74,20 @@ public class BorrowController {
 	 */
 	@PostMapping("/borrowUserLikeSearch")
 	public List<BorrowBookInfo> searchHisByLikeSearch(@RequestBody UserBorrowLikeSearch userBorrowLikeSearch) {
+		System.out.println(userBorrowLikeSearch);
+		userBorrowLikeSearch.setIndex(userBorrowLikeSearch.getIndex()*5);
 		List<BorrowBookInfo> borrowDetail = service.borrowUserLikeSearch(userBorrowLikeSearch);
+
 		return borrowDetail;
+	}
+	
+	
+	@PostMapping("/borrowUserLikeSearchCount")
+	public int searchHisByLikeSearchCount(@RequestBody UserBorrowLikeSearch userBorrowLikeSearch) {
+		System.out.println(userBorrowLikeSearch);
+		int re = service.borrowUserLikeSearchCount(userBorrowLikeSearch);
+		
+		return re;
 	}
 
 	// 功能: 用户借阅历史的总数
@@ -104,6 +117,7 @@ public class BorrowController {
 	public List<BorrowUserInfo> BorrowPage(@RequestBody BorrowByPage borrowByPage) 
 	{
 		List<BorrowUserInfo> re = service.getBorrowByPage(borrowByPage);
+
 		return re;
 	}
 	
@@ -140,6 +154,7 @@ public class BorrowController {
 		return re;
 	}
 	
+	
 	//统计功能  年月日  
 	//功能: 当日借出量
 	//输入参数: 无
@@ -168,6 +183,16 @@ public class BorrowController {
 	public int BorrowMonthTotal()
 	{
 		int re = service.borrowMonthTotal();
+		return re;
+	}
+	
+	//功能: 返回最近五个月的借出量
+	//输入参数: 当前日期
+	//返回参数: FiveMonthData
+	@GetMapping("/borrowFiveMonthData/{num}")
+	public FiveMonthData BorrowFiveMonthData(@PathVariable("num") int num)
+	{
+		FiveMonthData re = service.borrowFiveMonthData(num);
 		return re;
 	}
 	

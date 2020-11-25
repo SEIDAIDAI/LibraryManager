@@ -1,5 +1,7 @@
 package com.ibm6.service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +38,16 @@ public class AnnouncementService {
 	}
 	
 	public int announcementInsert(Announcement announcement) {
-		
+		Date date=new Date();
+		System.out.println(date);
+		announcement.setPublishDate(date);
+//		Calendar time = Calendar.getInstance();
+//		time.set(Calendar.YEAR, 1997);
+//		announcement.setExpireDate(time.getTime());
 		return mapper.announcementInsert(announcement);
+	}
+	
+	public String showNewAnnouncement() {
+		return mapper.showNewAnnouncement();
 	}
 }
