@@ -15,6 +15,7 @@ import com.ibm6.model.LoginModel;
 import com.ibm6.model.LoginResult;
 import com.ibm6.model.Register;
 import com.ibm6.service.RoleService;
+import com.ibm6.service.UserService;
 
 
 
@@ -22,6 +23,9 @@ import com.ibm6.service.RoleService;
 public class RoleController {
 	@Autowired
 	private RoleService service;
+	
+	@Autowired 
+	private UserService userservice;
 	
 	@PostMapping("/login")
 	public LoginResult login(@RequestBody LoginModel model) {
@@ -36,6 +40,7 @@ public class RoleController {
 				if (role.getAdmin()==1) {
 					result.setAdmin(1);
 				}
+				result.setName(userservice.findById(role.getUserId()).getName());
 				return result;
 			}
 			else {

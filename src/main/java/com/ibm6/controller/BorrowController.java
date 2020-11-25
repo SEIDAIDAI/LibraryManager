@@ -186,12 +186,23 @@ public class BorrowController {
 	}
 	
 	//功能: 返回最近五个月的借出量
-	//输入参数: 当前日期
+	//输入参数: 无
 	//返回参数: FiveMonthData
 	@GetMapping("/borrowFiveMonthData/{num}")
 	public FiveMonthData BorrowFiveMonthData(@PathVariable("num") int num)
 	{
 		FiveMonthData re = service.borrowFiveMonthData(num);
+		return re;
+	}
+	
+	//功能: 返回最近五个月的借入量
+	//输入参数: 无
+	//返回参数: FiveMonthData
+	//未测试使用
+	@GetMapping("/borrowFiveMonthRetData/{num}")
+	public FiveMonthData BorrowFiveMonthRetData(@PathVariable("num") int num)
+	{
+		FiveMonthData re = service.borrowFiveMonthRetData(num);
 		return re;
 	}
 	

@@ -226,7 +226,6 @@ public class borrowService {
 	
 	public int borrowDayRetBorrowTotal() 
 	{ 
-		System.out.println(getBorrowDay());
 		int total = mapper.getDayRetTotal(getBorrowDay()); 
 		return total; 
 	}
@@ -323,6 +322,68 @@ public class borrowService {
 		}
 		else {
 			data.setValue(mapper.getMonthBorrowTotal(condition));
+			data.setName(1 + "");
+		}
+		month.add(data);
+		re.setFiveMonth(month);
+		return re;
+	}
+	
+	public FiveMonthData borrowFiveMonthRetData(int n)
+	{
+		FiveMonthData re = new FiveMonthData();
+		
+		int offset = n - 1 - 1;
+		//从当前月  往前数5个月
+		Calendar start = GetMonthStart();
+		//Calendar  月份从 0 开始算起
+		start.add(Calendar.MONTH, -offset - 1);
+		Calendar end = GetMonthStart();
+		end.add(Calendar.MONTH, -(offset - 1) - 1);
+		BorrowDate condition = new BorrowDate();
+		List<MonthData> month = new ArrayList<MonthData>();
+		
+		for (int i = 1; i < n; i++)
+		{
+			if (start.compareTo(end) < 0){
+				condition.setStart(start.getTime());
+				condition.setToday(end.getTime());
+			}
+			else{
+				condition.setStart(end.getTime());
+				condition.setToday(start.getTime());
+			}
+			MonthData data = new MonthData();
+			if (start.get(Calendar.MONTH) + 2 != 13){
+				data.setValue(mapper.getMonthRetTotal(condition));
+				data.setName((start.get(Calendar.MONTH) + 2) + "");
+				
+			}
+			else {
+				data.setValue(mapper.getMonthRetTotal(condition));
+				data.setName(1 + "");
+			}
+			month.add(data);
+			start.add(Calendar.MONTH, 1);
+			end.add(Calendar.MONTH, 1);
+		}
+
+		if (start.compareTo(end) < 0){
+			condition.setStart(start.getTime());
+			condition.setToday(end.getTime());
+		}
+		else{
+			condition.setStart(end.getTime());
+			condition.setToday(start.getTime());
+		}
+		MonthData data = new MonthData();
+		if (start.get(Calendar.MONTH) + 2 != 13){
+			data.setValue(mapper.getMonthRetTotal(condition));
+			data.setName(start.get(Calendar.MONTH) + 2 + "");
+			
+		}
+		else {
+			data.setValue(mapper.getMonthRetTotal(condition));
 			data.setName(1 + "");
 		}
 		month.add(data);

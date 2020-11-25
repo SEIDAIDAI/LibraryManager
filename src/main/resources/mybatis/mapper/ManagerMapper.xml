@@ -35,7 +35,7 @@
 		user.description
 		from
 		user,role
-		where user.user_id = role.user_id
+		where user.user_id = role.user_id and user.user_id > 1000
 		limit #{index},5
 	</select>
 </mapper>

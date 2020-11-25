@@ -98,7 +98,8 @@
 	</update>
 
 	<select id="findUserByPage" resultType="com.ibm6.model.UserAndAccount">
-		select user.user_id,
+		select 
+		user.user_id,
 		role.user_account,
 		user.name,
 		user.gender,

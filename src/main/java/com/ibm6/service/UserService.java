@@ -45,4 +45,8 @@ public class UserService {
 	public List<UserAndAccount> findUserByExample(User user,Integer index) {
 		return userMapper.findUserByExample(user,index);
 	}
+	
+	public User findById(int id) {
+		return userMapper.findById(id);
+	}
 }
