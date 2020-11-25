@@ -74,7 +74,6 @@ public class BorrowController {
 	 */
 	@PostMapping("/borrowUserLikeSearch")
 	public List<BorrowBookInfo> searchHisByLikeSearch(@RequestBody UserBorrowLikeSearch userBorrowLikeSearch) {
-		System.out.println(userBorrowLikeSearch);
 		userBorrowLikeSearch.setIndex(userBorrowLikeSearch.getIndex()*5);
 		List<BorrowBookInfo> borrowDetail = service.borrowUserLikeSearch(userBorrowLikeSearch);
 
@@ -117,7 +116,7 @@ public class BorrowController {
 	public List<BorrowUserInfo> BorrowPage(@RequestBody BorrowByPage borrowByPage) 
 	{
 		List<BorrowUserInfo> re = service.getBorrowByPage(borrowByPage);
-
+		System.out.println(re.get(0).getRetTime());
 		return re;
 	}
 	

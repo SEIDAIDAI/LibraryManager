@@ -56,7 +56,8 @@
 		select
 		*
 		from borrow
-		where  borrow.user_id = #{userId} and borrow.ret_flag=0 order by ret_time desc;
+		where  borrow.user_id = #{userId} and borrow.ret_flag=0 
+		order by borrow_time desc;
 	</select>
 	
 	
@@ -65,7 +66,12 @@
 		count(*)
 		from borrow, book
 		where borrow.book_id = book.book_id
-		and borrow.user_id = #{userId} and book.book_name like '%${bookName}%';
+		and borrow.user_id = #{userId} and (
+		book.book_name like '%${bookName}%'
+		or book.nation like '%${bookName}%'
+		or book.type like '%${bookName}%'
+		or book.length like '%${bookName}%'
+		or book.theme like '%${bookName}%')
 	</select>
 
 	<select id="getDetailByLikeSearch" resultType="com.ibm6.model.BorrowBookInfo">
@@ -79,7 +85,13 @@
 		borrow.borrow_time
 		from borrow, book
 		where borrow.book_id = book.book_id
-		and borrow.user_id = #{userId} and book.book_name like '%${bookName}%' order by borrow.borrow_time desc
+		and borrow.user_id = #{userId} and 
+		(book.book_name like '%${bookName}%' 
+		or book.nation like '%${bookName}%'
+		or book.type like '%${bookName}%'
+		or book.length like '%${bookName}%'
+		or book.theme like '%${bookName}%')
+		order by borrow.borrow_time desc
 		limit #{index}, 5
 	</select>
 	
@@ -98,7 +110,7 @@
 		where borrow.book_id = book.book_id and borrow.user_id = #{userId}
 		limit #{index}, 5
 	</select> -->
-	<select id="selectBorrowByPage" resultType="com.ibm6.model.BorrowUserInfo">
+	<select id="selectBorrowByPageNoReturn" resultType="com.ibm6.model.BorrowUserInfo">
 		select
 		borrow.id,
 		book.book_name,
@@ -108,10 +120,60 @@
 		book.length,
 		borrow.ret_time
 		from borrow, book
-		where borrow.book_id = book.book_id and borrow.user_id = #{userId} order by borrow.ret_time desc
+		where borrow.book_id = book.book_id 
+		and borrow.user_id = #{userId} 
+		and borrow.ret_flag = 0
+		order by borrow.ret_time desc 
 		limit #{index}, 5
 	</select>
-	
+	<select id="selectBorrowByPageHasReturn" resultType="com.ibm6.model.BorrowUserInfo">
+		select
+		borrow.id,
+		book.book_name,
+		book.nation,
+		book.type,
+		book.theme,
+		book.length,
+		borrow.ret_time
+		from borrow, book
+		where borrow.book_id = book.book_id 
+		and borrow.user_id = #{userId} 
+		and borrow.ret_flag = 1
+		order by borrow.ret_time desc 
+		limit #{index}, 5
+	</select>
+	<select id="selectBorrowByPage" resultType="com.ibm6.model.BorrowUserInfo">
+		(select
+		borrow.id,
+		book.book_name,
+		book.nation,
+		book.type,
+		book.theme,
+		book.length,
+		borrow.ret_time,
+		borrow.borrow_time
+		from borrow, book
+		where borrow.book_id = book.book_id 
+		and borrow.user_id = #{userId} 
+		and borrow.ret_flag = 0
+		order by borrow.ret_time desc )
+		union all
+		(select
+		borrow.id,
+		book.book_name,
+		book.nation,
+		book.type,
+		book.theme,
+		book.length,
+		borrow.ret_time,
+		borrow.borrow_time
+		from borrow, book
+		where borrow.book_id = book.book_id 
+		and borrow.user_id = #{userId} 
+		and borrow.ret_flag = 1
+		order by borrow.ret_time desc )
+		limit #{index}, 5
+	</select>
 	<insert id="saveBorrowInfo">
 		insert into borrow(user_id, book_id, borrow_time, ret_time, valid_time)
 		values(#{userId}, #{bookId}, #{borrowTime}, #{retTime}, #{validTime})

@@ -9,9 +9,18 @@ public class BorrowUserInfo {
 	private String theme;
 	private String type;
 	private String length;
+	private Date borrowTime;
 	private Date retTime;
 	private int bookId;
 	
+	
+
+	public final Date getBorrowTime() {
+		return borrowTime;
+	}
+	public final void setBorrowTime(Date borrowTime) {
+		this.borrowTime = borrowTime;
+	}
 	public int getId() {
 		return id;
 	}

@@ -34,7 +34,18 @@ public class borrowService {
 	
 	public BorrowDetail getBorrowInfo(int id) {
 		BorrowDetail re =  mapper.getBorrowById(id);
-
+		
+		Calendar cal= Calendar.getInstance();
+		Calendar cal2 = Calendar.getInstance();
+		cal2.set(1970, 2, 1);  
+		cal.setTime(new Date());
+		//已经归还的
+		if (re.getRetTime().compareTo(cal.getTime()) < 0 && re.getRetTime().compareTo(cal2.getTime()) > 0)
+		{
+			re.setValidTime(0);
+			return re;
+		}
+		//还没归还的
 		Calendar ret = Calendar.getInstance();
 		ret.setTime(re.getBorrowTime());
 		ret.add(Calendar.MONTH, 1);
@@ -72,19 +83,20 @@ public class borrowService {
 	public List<BorrowList> getBorrowList(int userId)
 	{
 		List<BorrowList> re = mapper.selectBorrowByUserId(userId);
-
 		return re;
 	}
 	
 	public List<BorrowBookInfo> borrowUserLikeSearch(UserBorrowLikeSearch userBorrowLikeSearch) {
 		List<BorrowBookInfo> borrowDetail = mapper.getDetailByLikeSearch(userBorrowLikeSearch);
-
+		
 		Calendar ret = Calendar.getInstance();
 		for (BorrowBookInfo i : borrowDetail)
 		{
 			ret.setTime(i.getBorrowTime());
 			ret.add(Calendar.MONTH, 1);
+			//需要计算retTime
 			i.setRetTime(ret.getTime()); 
+
 		}
 		return borrowDetail;
 	}
@@ -106,7 +118,24 @@ public class borrowService {
 	public List<BorrowUserInfo> getBorrowByPage(BorrowByPage borrowByPage)
 	{
 		borrowByPage.setIndex(borrowByPage.getIndex() * 5);
+		
+//		List<BorrowUserInfo> noreturn = mapper.selectBorrowByPageNoReturn(borrowByPage);
+//		List<BorrowUserInfo> hasReturn = mapper.selectBorrowByPageHasReturn(borrowByPage);
+//		noreturn.addAll(hasReturn);
 		List<BorrowUserInfo> re = mapper.selectBorrowByPage(borrowByPage);
+		Calendar ret = Calendar.getInstance();
+		Calendar cal = Calendar.getInstance();
+		cal.set(1970, 2, 1);  //月份从0开始
+		for (BorrowUserInfo i : re)
+		{
+			if (i.getRetTime().compareTo(cal.getTime()) < 0)
+			{
+				ret.setTime(i.getBorrowTime());
+				ret.add(Calendar.MONTH, 1);
+				//需要计算retTime
+				i.setRetTime(ret.getTime());
+			}
+		}
 		return re;
 	}
 	

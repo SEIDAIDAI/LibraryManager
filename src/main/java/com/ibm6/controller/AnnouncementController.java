@@ -68,8 +68,8 @@ public class AnnouncementController {
 	}
 	
 	
-	@GetMapping("showAnnouncement")
-	public String showAnnouncement() {
+	@GetMapping("/showAnnouncement")
+	public Announcement showAnnouncement() {
 		return service.showNewAnnouncement();
 	}
 }

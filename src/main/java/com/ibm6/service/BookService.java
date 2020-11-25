@@ -70,6 +70,15 @@ public class BookService {
 	//书籍信息更新
 	public int bookInfoUpdate(Book book)
 	{
+		int i=bookMapper.getUploadAmount(book)-book.getUploadAmount(); //下架数量
+		if(i>bookMapper.getById(book).getLeftAmount()) {
+			return 0;
+		}
+		int originalUploadAmount = bookMapper.getUploadAmount(book);
+		int minus = originalUploadAmount - book.getUploadAmount();  //  10 - 8    
+		book.setUploadAmount(minus);
+		
+		
 		int re = bookMapper.updateById(book);
 		return re;
 	}
@@ -77,6 +86,7 @@ public class BookService {
 	public int bookInsert(Book book)
 	{
 		book.setLeftAmount(book.getUploadAmount());
+		book.setDownloadAmount(0);
 		book.setStoreDate(new Date());
 		int re = bookMapper.saveNewBook(book);
 		return re;

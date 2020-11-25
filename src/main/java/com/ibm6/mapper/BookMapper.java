@@ -29,4 +29,5 @@ public interface BookMapper {
 	public int getBookTotalByType(Book book);
 	public int getBookTotalByKeyword(Book book);
 	public List<BookUserList> selectBookUserList(int bookId);
+	public int getUploadAmount(Book book);
 }

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.ibm6.bean.Book;
 import com.ibm6.bean.User;
+import com.ibm6.model.UserAndAccount;
 
 @Mapper
 public interface ManagerMapper {
@@ -17,5 +18,5 @@ public interface ManagerMapper {
 	
 	public List<User> findAll();
 	
-	public List<User> findUserByPage(Integer index);
+	public List<UserAndAccount> findUserByPage(Integer index);
 }

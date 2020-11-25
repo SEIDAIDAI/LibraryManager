@@ -170,19 +170,18 @@
 		<if test="theme!=null and theme!=''">
 			theme = #{theme},
 		</if>
-		<if test="leftAmount!=0">
-			left_amount = #{leftAmount},
+		<if test="leftAmount!=null">
+			left_amount = left_amount - #{uploadAmount},
 		</if>
-		<if test="uploadAmount!=0">
-			upload_amount = #{uploadAmount},
+		<if test="uploadAmount!=null">
+			upload_amount = upload_amount - #{uploadAmount},
 		</if>
-		<if test="downloadAmount!=0">
-			download_amount = #{downloadAmount},
+		<if test="downloadAmount!=null">
+			download_amount = download_amount + #{uploadAmount},
 		</if>		
 		<if test="summary!=null and summary!=''">
 			summary = #{summary},
 		</if>
-		
 		</set>
 		where book_id = #{bookId}
 	</update>
@@ -243,6 +242,12 @@
 		where borrow.user_id = user.user_id and borrow.book_id = book.book_id and role.user_id = borrow.user_id
 		and borrow.book_id = #{booId} and role.active = 1
 		order by borrow.borrow_time desc
+	</select>
+	
+	<select id="getUploadAmount" resultType="int">
+		select upload_amount 
+		from book
+		where book_id = #{bookId}
 	</select>
 </mapper>
 

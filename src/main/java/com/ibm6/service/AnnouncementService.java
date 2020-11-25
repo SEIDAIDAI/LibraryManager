@@ -47,7 +47,7 @@ public class AnnouncementService {
 		return mapper.announcementInsert(announcement);
 	}
 	
-	public String showNewAnnouncement() {
+	public Announcement showNewAnnouncement() {
 		return mapper.showNewAnnouncement();
 	}
 }

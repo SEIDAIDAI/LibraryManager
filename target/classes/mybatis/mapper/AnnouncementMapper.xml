@@ -62,8 +62,8 @@
 		where id = #{id}
 	</update>
 	
-	<select id="showNewAnnouncement" resultType="java.lang.String">
-		select content from announcement order by publish_date desc limit 0,1
+	<select id="showNewAnnouncement" resultType="com.ibm6.bean.Announcement">
+		select * from announcement order by publish_date desc limit 0,1
 	</select>
 
 </mapper>

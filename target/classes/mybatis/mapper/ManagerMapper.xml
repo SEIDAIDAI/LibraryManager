@@ -20,7 +20,22 @@
 	select * from user 
 	</select>
 	
-	<select id="findUserByPage" resultType="com.ibm6.bean.User">
-	select * from user where user_id > 1000 limit #{index},5
+	<select id="findUserByPage" resultType="com.ibm6.model.UserAndAccount">
+	<!-- select 
+	 from user,role where user_id > 1000 limit #{index},5 -->
+	 select user.user_id,
+		role.user_account,
+		user.name,
+		user.gender,
+		user.age,
+		user.email,
+		user.birthday,
+		user.phone,
+		user.address,
+		user.description
+		from
+		user,role
+		where user.user_id = role.user_id
+		limit #{index},5
 	</select>
 </mapper>

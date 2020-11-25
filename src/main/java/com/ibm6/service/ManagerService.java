@@ -14,6 +14,7 @@ import com.ibm6.bean.User;
 import com.ibm6.mapper.BookMapper;
 import com.ibm6.mapper.ManagerMapper;
 import com.ibm6.mapper.UserMapper;
+import com.ibm6.model.UserAndAccount;
 
 @Service
 public class ManagerService {
@@ -37,7 +38,7 @@ public class ManagerService {
 		return 0;
 	}
 	
-	public List<User> findUserByPage(Integer index){
+	public List<UserAndAccount> findUserByPage(Integer index){
 		return mapper.findUserByPage(index);
 	}
 }

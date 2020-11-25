@@ -25,7 +25,10 @@ public interface BorrowMapper {
 	public List<BorrowBookInfo> getDetailByLikeSearch(UserBorrowLikeSearch userBorrowLikeSearch);
 	public List<BorrowList> selectBorrowByUserId(int userId);
 	public List<BorrowBookInfo> selectBorrowByUserIdAndFlag(int userId);
+	public List<BorrowUserInfo> selectBorrowByPageNoReturn(BorrowByPage borrowByPage);
+	public List<BorrowUserInfo> selectBorrowByPageHasReturn(BorrowByPage borrowByPage);
 	public List<BorrowUserInfo> selectBorrowByPage(BorrowByPage borrowByPage);
+
 	public int saveBorrowInfo(Borrow borrow);
 	public int updateBorrowFlagAndTime(Borrow borrow);
 	public int updateBookUploadInc(Borrow borrow);

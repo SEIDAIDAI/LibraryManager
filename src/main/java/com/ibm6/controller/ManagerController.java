@@ -14,6 +14,7 @@ import com.ibm6.bean.User;
 import com.ibm6.model.BookUserList;
 import com.ibm6.model.BooksInfo;
 import com.ibm6.model.BorrowBookInfo;
+import com.ibm6.model.UserAndAccount;
 import com.ibm6.service.BookService;
 import com.ibm6.service.ManagerService;
 import com.ibm6.service.borrowService;
@@ -81,7 +82,7 @@ public class ManagerController {
 	}
 	
 	@RequestMapping("/ManagerShowUserList/{index}")
-	public List<User> showUserList(@PathVariable("index") Integer index){
+	public List<UserAndAccount> showUserList(@PathVariable("index") Integer index){
 		return managerService.findUserByPage(index * 5);
 	}
 	
