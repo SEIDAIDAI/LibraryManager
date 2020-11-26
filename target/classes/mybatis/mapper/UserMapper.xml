@@ -22,9 +22,9 @@
 		user_id = #{id}
 	</delete>
 
+	<!-- 注释掉大于1000 -->
 	<select id="getTotalUserCount" resultType="int">
-		select count(*) from
-		user where user_id > 1000;
+		select count(*) from user where user_id > 999
 	</select>
 
 	<select id="findAll" resultType="com.ibm6.bean.User">
@@ -115,12 +115,18 @@
 		limit #{index},5
 	</select>
 
+	<!-- genggai -->
 	<select id="findUserCountByExample" resultType="int">
-		select
+		<!-- select
 		count(*)
 		from user,role
 		where
-		user.user_id = role.user_id 
+		user.user_id = role.user_id  -->
+		select
+		count(*)
+		from user,role
+		where user.user_id > 999
+		and user.user_id = role.user_id
 		<if test="name!=null and name!=''">
 			and (user.name like '%${name}%' or role.user_account like '%${name}%')  
 		</if>
@@ -146,7 +152,7 @@
 		USER,
 		role
 		WHERE
-		USER .user_id = role.user_id 
+		USER .user_id = role.user_id and user.user_id >999
 		<if test="user.name!=null and user.name!=''">
 			and (user.name like '%${user.name}%' or role.user_account like '%${user.name}%')  
 		</if>

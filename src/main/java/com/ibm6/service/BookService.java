@@ -141,9 +141,9 @@ public class BookService {
 		return re;
 	}
 	
-	public Book findByBookName(String bookName) {
+	public Book findByBook(Book book) {
 //		bookMapper.getByBookName(bookName);
-		return bookMapper.getByBookName(bookName);
+		return bookMapper.getByBook(book);
 	}
 }
 

@@ -123,6 +123,11 @@ public class borrowService {
 //		List<BorrowUserInfo> hasReturn = mapper.selectBorrowByPageHasReturn(borrowByPage);
 //		noreturn.addAll(hasReturn);
 		List<BorrowUserInfo> re = mapper.selectBorrowByPage(borrowByPage);
+		System.out.println("------------------------------------");
+		System.out.println(re);
+		System.out.println("--------------------------------------");
+		if (re == null)
+			return re;
 		Calendar ret = Calendar.getInstance();
 		Calendar cal = Calendar.getInstance();
 		cal.set(1970, 2, 1);  //月份从0开始
@@ -182,6 +187,7 @@ public class borrowService {
 		Calendar cal = Calendar.getInstance();
 		cal.set(1970, 0, 1);  //月份从0开始
 		borrow.setRetTime(cal.getTime());
+		borrow.setRetFlag(0);
 		int re1 = mapper.saveBorrowInfo(borrow);
 		int re2 = mapper.updateBookUploadDec(borrow);
 		if (re1 == 1 && re2 == 1) {
@@ -198,7 +204,10 @@ public class borrowService {
 	@Transactional(rollbackFor = Exception.class)
 	public int borrowReturn(Borrow borrow)
 	{
-		borrow.setRetTime(Calendar.getInstance().getTime());
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		borrow.setRetTime(cal.getTime());
+		borrow.setRetFlag(1);
 		int re1 = mapper.updateBorrowFlagAndTime(borrow);  //记录也应该是存在的  用来检测其他逻辑是否会出现一些错误的逻辑
 		if (re1 == 0)
 			return 2;
@@ -212,6 +221,7 @@ public class borrowService {
 	public Date getBorrowDay()
 	{
 		Calendar calendar = Calendar.getInstance();  
+		calendar.setTime(new Date());
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);

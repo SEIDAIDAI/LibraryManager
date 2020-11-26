@@ -50,6 +50,7 @@
 			<if test="book.theme != null">
 				and theme=#{book.theme}
 			</if>
+			order by store_date desc
 			limit #{index},5
 	</select>
 	
@@ -71,7 +72,7 @@
 			</if>
 			<if test="theme != null">
 				and theme=#{theme}
-			</if>
+			</if> 
 	</select>
 
 	<select id="getById" resultType="com.ibm6.bean.Book">
@@ -117,6 +118,7 @@
 				or author like CONCAT(CONCAT('%',#{book.bookName},'%'))
 			</if>
 		</where>
+		order by store_date desc
 		limit #{index},5
 	</select>
 	
@@ -145,8 +147,9 @@
 		download_amount,
 		author,
 		summary 
-		from Book limit
-		#{index}, 5
+		from Book 
+		order by store_date desc
+		limit #{index}, 5
 	</select>
 
 	<update id="updateById">
@@ -239,8 +242,13 @@
 		borrow.borrow_time,
 		borrow.ret_time
 		from user, book, borrow, role
-		where borrow.user_id = user.user_id and borrow.book_id = book.book_id and role.user_id = borrow.user_id
-		and borrow.book_id = #{booId} and role.active = 1
+		where 
+		borrow.user_id = user.user_id 
+		and borrow.book_id = book.book_id 
+		and role.user_id = borrow.user_id
+		and borrow.book_id = #{booId} 
+		and borrow.ret_flag = 0
+		and role.active = 1
 		order by borrow.borrow_time desc
 	</select>
 	
@@ -250,8 +258,15 @@
 		where book_id = #{bookId}
 	</select>
 	
-	<select id="getByBookName" resultType="com.ibm6.bean.Book">
-		select * from book where book_name=#{bookName}
+	<select id="getByBook" resultType="com.ibm6.bean.Book">
+		select * from book 
+		where 
+		book_name=#{bookName} 
+		and nation = #{nation}
+		and type = #{type}
+		and length = #{length}
+		and theme = #{theme}
+		and author = #{author}
 	</select>
 </mapper>
 

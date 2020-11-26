@@ -81,6 +81,7 @@ public class ManagerController {
 		return "-1";
 	}
 	
+	//管理员查询所有用户
 	@RequestMapping("/ManagerShowUserList/{index}")
 	public List<UserAndAccount> showUserList(@PathVariable("index") Integer index){
 		return managerService.findUserByPage(index * 5);
@@ -94,6 +95,7 @@ public class ManagerController {
 		return bookService.bookSearchByKeyword(book, index*5);
 	}
 	
+	//管理员的书库功能
 	@RequestMapping("/managerFindBookByType/{index}")
 	public List<Book> managerFindBookByType(
 			@RequestBody Book book,
@@ -102,6 +104,7 @@ public class ManagerController {
 		return bookService.bookSearchByType(book, index*5);
 	}
 	
+	//管理员点击某本书的借阅详情按钮，显示历史借阅的用户
 	@GetMapping("/managerBookUserList/{bookId}")
 	public List<BookUserList> managerBookUserList(@PathVariable("bookId") Integer bookId)
 	{

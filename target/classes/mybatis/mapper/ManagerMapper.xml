@@ -20,6 +20,7 @@
 	select * from user 
 	</select>
 	
+	<!-- 删掉and user.user_id > 1000 -->
 	<select id="findUserByPage" resultType="com.ibm6.model.UserAndAccount">
 	<!-- select 
 	 from user,role where user_id > 1000 limit #{index},5 -->
@@ -35,7 +36,7 @@
 		user.description
 		from
 		user,role
-		where user.user_id = role.user_id and user.user_id > 1000
+		where user.user_id = role.user_id and user.user_id > 999
 		limit #{index},5
 	</select>
 </mapper>
