@@ -172,7 +172,7 @@
 		where borrow.book_id = book.book_id 
 		and borrow.user_id = #{userId} 
 		and borrow.ret_flag = 1
-		order by borrow.ret_time desc )
+		order by borrow.borrow_time desc )
 		limit #{index}, 5
 	</select>
 	<insert id="saveBorrowInfo">

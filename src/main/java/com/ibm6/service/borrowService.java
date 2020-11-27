@@ -123,9 +123,6 @@ public class borrowService {
 //		List<BorrowUserInfo> hasReturn = mapper.selectBorrowByPageHasReturn(borrowByPage);
 //		noreturn.addAll(hasReturn);
 		List<BorrowUserInfo> re = mapper.selectBorrowByPage(borrowByPage);
-		System.out.println("------------------------------------");
-		System.out.println(re);
-		System.out.println("--------------------------------------");
 		if (re == null)
 			return re;
 		Calendar ret = Calendar.getInstance();
