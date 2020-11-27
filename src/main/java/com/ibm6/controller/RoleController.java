@@ -27,6 +27,14 @@ public class RoleController {
 	@Autowired 
 	private UserService userservice;
 	
+	
+	//登陆功能
+	//输入登陆数据，包括账号 account，密码 password
+	//返回信息 LoginResult 
+	//内容包括resultcode 为1时登陆成功； -1时是账号或密码错误
+	//name 用户姓名
+	//admin 为1时是管理员，为其他就是普通用户
+	//userId 用户id
 	@PostMapping("/login")
 	public LoginResult login(@RequestBody LoginModel model) {
 		System.out.println(model);
@@ -51,6 +59,12 @@ public class RoleController {
 		}
 	}
 	
+	
+	//注册
+	//传入数据 包括账号 account，密码 password，邮箱email，姓名name
+	//返回0时是用户已存在
+	//返回1时是注册成功
+	//返回-1是注册失败，不知道原因
 	@RequestMapping("/regist")
 	public String regist(@RequestBody Register model) throws ParseException {
 //		System.out.println(model);
@@ -79,25 +93,14 @@ public class RoleController {
 		} catch (Exception e) {
 			return "-1";
 		}
-		service.regist(role, user);
 		return "1"; 
 	}
 	
 	@RequestMapping("/updatePassword")
 	public int updatePassword(@RequestBody Role role) {
 		System.out.println(role);
-//		service.updateById(role);
 		return service.updateById(role);
 	}
 	
 	
-	
-	@RequestMapping("/findAllRole")
-	public String findAllRole() {
-		List<Role> roles = service.findAllRole();
-		for(Role role:roles) {
-			System.out.println(role);
-		}
-		return "11";
-	}
 }

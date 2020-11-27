@@ -61,29 +61,7 @@ public class BookController {
 			@PathVariable("index") Integer index,
 			@PathVariable("userId") Integer userId){
 		List<Book> books = bookService.bookSearchByType(args,index*5);
-		List<Integer> mybooks=new ArrayList<Integer>();
-		List<BorrowList> borrowList = borrowService.getBorrowList(userId);
-		System.out.println(borrowList);
-		for(BorrowList bl:borrowList) {
-			System.out.println(bl.getBookId());
-			mybooks.add(bl.getBookId());
-		}
-		List<BookStatus> bookStatuses=new ArrayList<BookStatus>();
-		for(Book bs:books) {
-			BookStatus temp=new BookStatus();
-			for(Integer i:mybooks) {
-				if (i==bs.getBookId()) {
-					temp.setStatus(1);
-					break;
-				}else {
-					temp.setStatus(0);
-				}
-				
-			}
-			temp.setBook(bs);
-			bookStatuses.add(temp);
-		}
-		return bookStatuses;
+		return borrowService.addMyStatus(books, userId);
 	}
 	
 	//功能: 显示书籍详情
@@ -113,7 +91,7 @@ public class BookController {
 			@PathVariable("index") Integer index,
 			@PathVariable("userId") Integer userId){
 		List<Book> books = bookService.bookSearchByKeyword(book,index*5);
-		return addMyStatus(books, userId);
+		return borrowService.addMyStatus(books, userId);
 	}
 	
 	//分页显示全部书籍 不带有状态
@@ -151,13 +129,7 @@ public class BookController {
 		int re = bookService.bookDelete(book);
 		return re;
 	}
-	
-//	@PostMapping("/BookStatus")
-//	public int BookDStatus(@RequestBody Book book)
-//	{
-//		int re = bookService.bookDelete(book);
-//		return re;
-//	}
+
 	
 	//返回所有国家
 	@GetMapping("/bookNation")
@@ -184,63 +156,15 @@ public class BookController {
 		return bookService.bookLengths();
 	}
 	
-	//
+	//返回书籍和书籍是否是自己借阅的
+	//输入页数和userId
+	//返回Book和状态
 	@RequestMapping("/bookStatus/{index}/{userId}")
 	public List<BookStatus> bookStatus(
 			@PathVariable("index") Integer index,
 			@PathVariable("userId") Integer userId){
 		List<Book> books = bookService.bookSearchByPage(index*5);
-		List<Integer> mybooks=new ArrayList<Integer>();
-		List<BorrowList> borrowList = borrowService.getBorrowList(userId);
-		for(BorrowList bl:borrowList) {
-			mybooks.add(bl.getBookId());
-		}
-		List<BookStatus> bookStatuses=new ArrayList<BookStatus>();
-		for(Book bs:books) {
-			BookStatus temp=new BookStatus();
-			for(Integer i:mybooks) {
-				if (i==bs.getBookId()) {
-					temp.setStatus(1);
-					break;
-				}else {
-					temp.setStatus(0);
-				}
-			}
-			temp.setBook(bs);
-			bookStatuses.add(temp);
-		}
-		return bookStatuses;
+		return borrowService.addMyStatus(books, userId);
 		
 	}
-	
-	
-//	@RequestMapping("/findByAu")
-//	@RequestMapping("/findBookByFourCondition/{index}")
-//	public List<BookStatus> findBookByFourCondition(@RequestBody Book book,@PathVariable Integer index){
-//		bookService.bookSearchByType(book);
-//		
-//		return null;
-//	}
-	 private List<BookStatus> addMyStatus(List<Book> books,Integer userId){
-		 List<Integer> mybooks=new ArrayList<Integer>();
-			List<BorrowList> borrowList = borrowService.getBorrowList(userId);
-			for(BorrowList bl:borrowList) {
-				mybooks.add(bl.getBookId());
-			}
-			List<BookStatus> bookStatuses=new ArrayList<BookStatus>();
-			for(Book bs:books) {
-				BookStatus temp=new BookStatus();
-				for(Integer i:mybooks) {
-					if (i==bs.getBookId()) {
-						temp.setStatus(1);
-						break;
-					}else {
-						temp.setStatus(0);
-					}
-				}
-				temp.setBook(bs);
-				bookStatuses.add(temp);
-			}
-			return bookStatuses;
-	 } 
 }

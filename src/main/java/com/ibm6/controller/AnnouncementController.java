@@ -36,11 +36,7 @@ public class AnnouncementController {
 		return service.getById(ann);
 	}
 	
-//	@GetMapping("/getById/{id}")
-//	public Announcement getAnnouncementById(@PathVariable("id") Integer id){
-//		Announcement ann=service.getById(id);
-//		return ann;
-//	}
+
 	
 	//功能：  更新公告表中的信息
 	//输入参数: Announcement
@@ -67,7 +63,9 @@ public class AnnouncementController {
 		return re;
 	}
 	
-	
+	//功能：显示最新的公告
+	//输入参数：无
+	//输出参数：Announcement
 	@GetMapping("/showAnnouncement")
 	public Announcement showAnnouncement() {
 		return service.showNewAnnouncement();

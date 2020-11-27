@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ibm6.bean.Book;
 import com.ibm6.bean.Borrow;
 import com.ibm6.mapper.BorrowMapper;
+import com.ibm6.model.BookStatus;
 import com.ibm6.model.BookUserList;
 import com.ibm6.model.BorrowBookInfo;
 import com.ibm6.model.BorrowByPage;
@@ -437,5 +438,28 @@ public class borrowService {
 		int re = mapper.getYearRetTotal(getBorrowYear());
 		return re;
 	}
+	
+	public List<BookStatus> addMyStatus(List<Book> books,Integer userId){
+		 List<Integer> mybooks=new ArrayList<Integer>();
+			List<BorrowList> borrowList = getBorrowList(userId);
+			for(BorrowList bl:borrowList) {
+				mybooks.add(bl.getBookId());
+			}
+			List<BookStatus> bookStatuses=new ArrayList<BookStatus>();
+			for(Book bs:books) {
+				BookStatus temp=new BookStatus();
+				for(Integer i:mybooks) {
+					if (i==bs.getBookId()) {
+						temp.setStatus(1);
+						break;
+					}else {
+						temp.setStatus(0);
+					}
+				}
+				temp.setBook(bs);
+				bookStatuses.add(temp);
+			}
+			return bookStatuses;
+	 } 
 	
 }
